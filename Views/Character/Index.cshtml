@@ -1,0 +1,215 @@
+﻿@{
+    ViewData["Title"] = "Character";
+}
+
+<div class="text-center">
+    <h1 class="display-4">New Character</h1>
+    <div id="newCharBtn"></div>
+    <div id="form-demo">
+        <div class="widget-container row">
+            <div id="select-player-text">Select player:</div>
+            <div id="select-player" class="mb-5"></div>
+            <div id="form-player" class=""></div>
+        </div>
+       @* <div class="row">
+            <div id="form-proficiency" class=""></div>
+        </div>*@
+    </div>
+</div>
+
+
+<script>
+    console.log("here1");
+    const store = new DevExpress.data.CustomStore({
+        key: 'Name',
+        load(loadOptions) {
+            const deferred = $.Deferred();    
+            const action = '@Url.Content("~/Character/loadPlayerData")';
+            //const args = {};
+            //[
+            //    'skip',
+            //    'take',
+            //    'requireTotalCount',
+            //    'requireGroupCount',
+            //    'sort',
+            //    'filter',
+            //    'totalSummary',
+            //    'group',
+            //    'groupSummary',
+            //].forEach((i) => {
+            //    if (i in loadOptions && isNotEmpty(loadOptions[i])) {
+            //        args[i] = JSON.stringify(loadOptions[i]);
+            //    }
+            //});
+            //globalAJAX('POST', action, args);
+            //globalNoDataAJAX('POST', action);
+
+            console.log("terst");
+            $.ajax({
+                method: verb,
+                url: action
+            })
+                .done(function (result) {
+                    console.log("result");
+                    console.log(result);
+                    deferred.resolve(result.data, {
+                        totalCount: result.totalCount,
+                        summary: result.summary,
+                        groupCount: result.groupCount,
+                    });
+                    alert("done");
+                })
+                .fail(function (result) {
+                    console.log(result);
+                    alert("error");
+                })
+
+            return deferred.promise();
+        },
+    });
+
+    function globalAJAX(verb, action, data) {
+        $.ajax({
+            method: verb,
+            url: action,
+            data: data
+        })
+        .done(function (result) {
+            console.log("result");
+            console.log(result);
+            deferred.resolve(result.data, {
+                totalCount: result.totalCount,
+                summary: result.summary,
+                groupCount: result.groupCount,
+            });
+            alert("done");
+        })
+        .fail(function () {
+            console.log(result);
+            alert("error");
+        })
+    }
+
+    function globalNoDataAJAX(verb, action) {
+        console.log("terst");
+        $.ajax({
+            method: verb,
+            url: action
+        })
+        .done(function (result) {
+            console.log("result");
+            console.log(result);
+            deferred.resolve(result.data, {
+                totalCount: result.totalCount,
+                summary: result.summary,
+                groupCount: result.groupCount,
+            });
+            alert("done");
+        })
+        .fail(function (result) {
+            console.log(result);
+            alert("error");
+        })
+    }
+    
+    //const players = [{
+    //    Name: 'Animo', 
+    //    Lvl: 1, 
+    //    Str: 10,
+    //    Dex: 18,
+    //    Con: 14,
+    //    Intel: 12,
+    //    Wis: 16,
+    //    Cha: 8
+    //}, {
+    //    Name: 'Saren',
+    //    Lvl: 3,
+    //    Str: 13,
+    //    Dex: 8,
+    //    Con: 11,
+    //    Intel: 16,
+    //    Wis: 8,
+    //    Cha: 18
+    //}, {
+    //    Name: 'Ryan',
+    //    Lvl: 2,
+    //    Str: 10,
+    //    Dex: 10,
+    //    Con: 11,
+    //    Intel: 14,
+    //    Wis: 19,
+    //    Cha: 8
+    //}];
+
+    const players = {
+        Name: 'Animo',
+        Lvl: 1,
+        Str: 10,
+        Dex: 18,
+        Con: 14,
+        Intel: 12,
+        Wis: 16,
+        Cha: 8
+    };
+
+    const proficiencies = [{
+        strSave: true, 
+        dexSave: true, 
+        conSave: true,
+        intelSave: true,
+        wisSave: true,
+        chaSave: true,
+        acrobatics: true,
+        animalHandling : true,
+        arcana : true,
+        athletics : true,
+        deception : true, 
+        history : true,
+        insight : true,
+        intimidation : true,
+        investigation : true,
+        medicine : true,
+        nature : true,
+        perception : true,
+        performance : true,
+        persuasion : true,
+        religion : true,
+        sleightOfHand : true,
+        stealth : true,
+        survival : true    
+    }];
+
+    const playerForm = $('#form-player').dxForm({
+        labelMode: 'static',
+        readOnly: false,
+        formData: players,
+        showColonAfterLabel: true,
+        labelLocation: 'left',
+        minColWidth: 200,
+        colCount: 1,
+    }).dxForm('instance');
+
+    const proficienciesForm = $('#form-proficiency').dxForm({
+        labelMode: 'static',
+        readOnly: false,
+        formData: proficiencies[0],
+        showColonAfterLabel: true,
+        labelLocation: 'left',
+        minColWidth: 200,
+        colCount: 2,
+    }).dxForm('instance');
+
+    const playerSelectorSelectBox = $('#select-player').dxSelectBox({
+        displayExpr: 'Name',
+        dataSource: players,
+        labelMode: 'floating',
+        label: 'Select player',
+        value: players[0],
+        onValueChanged(data) {
+            playerForm.option('formData', data.value);
+        },
+    }).dxSelectBox('instance');
+
+    const playerSelectorText = $('#select-player-text');
+
+</script>
