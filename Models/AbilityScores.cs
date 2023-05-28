@@ -1,26 +1,35 @@
-﻿namespace CharacterManager.Models
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CharacterManager.Models
 {
+    [Table("AbilityScores")]
     public class AbilityScores
     {
-        private Guid AbilityScoresId { get; set; }
-        private Guid PlayerId { get; set; }
-        private int Strength { get; set; }
-        private int Dexterity { get; set; }
-        private int Constitution { get; set; }
-        private int Intelligence { get; set; }
-        private int Wisdom { get; set; }
-        private int Charisma { get; set; }
+        [Key]
+        public Guid AbilityScoresId { get; set; }
 
-        private int StrBonus { get; set; }
-        private int DexBonus { get; set; }
-        private int ConBonus { get; set; }
-        private int IntBonus { get; set; }
-        private int WisBonus { get; set; }
-        private int ChaBonus { get; set; }
+        [ForeignKey("Character")]
+        public Guid CharacterId { get; set; }
+        public int Strength { get; set; }
+        public int Dexterity { get; set; }
+        public int Constitution { get; set; }
+        public int Intelligence { get; set; }
+        public int Wisdom { get; set; }
+        public int Charisma { get; set; }
+
+        public int StrBonus { get; set; }
+        public int DexBonus { get; set; }
+        public int ConBonus { get; set; }
+        public int IntBonus { get; set; }
+        public int WisBonus { get; set; }
+        public int ChaBonus { get; set; }
 
         public AbilityScores() { }
         public AbilityScores(int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma)
         {
+            AbilityScoresId = Guid.NewGuid();   
             Strength        = strength;
             Dexterity       = dexterity;
             Constitution    = constitution;

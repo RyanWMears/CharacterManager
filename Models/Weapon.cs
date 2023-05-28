@@ -2,11 +2,11 @@
 {
     public class Weapon : Item
     {
-        private string Type { get; set; }
-        private int Range { get; set; }
-        private int MaxRange { get; set; }
-        private int NumberOfDie { get; set; }
-        private int DieSize { get; set; }
-        private int Bonus { get; set; }
+        public string Type { get; set; }
+        public int Range { get; set; }
+        public int MaxRange { get; set; }
+        public int NumberOfDie { get; set; }
+        public int DieSize { get; set; }
+        public int Bonus { get; set; }
     }
 }

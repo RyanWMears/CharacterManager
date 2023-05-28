@@ -1,7 +1,10 @@
-﻿namespace CharacterManager.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CharacterManager.Models
 {
-    public class Spells
+    public class Spell
     {
+        [Key]
         public Guid SpellId { get; set; }
         public string Name { get; set; }
         public string Level { get; set; }
@@ -18,14 +21,14 @@
         public string Upcast { get; set; }
         public string Source { get; set; }
 
-        public Spells()
+        public Spell()
         {
 
         }
 
-        public Spells(Guid spellId, string name, string level, string description, string school, bool concentration, string castingTime, string range, string duration, string components, int saveDC, string spellLists, string materials, string upcast, string source)
+        public Spell(string name, string level, string description, string school, bool concentration, string castingTime, string range, string duration, string components, int saveDC, string spellLists, string materials, string upcast, string source)
         {
-            SpellId = spellId;
+            SpellId = new Guid();
             Name = name;
             Level = level;
             Description = description;

@@ -1,29 +1,34 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CharacterManager.Models
 {
     public class Skills
     {
-        private Guid SkillsId { get; set; }
-        private Guid PlayerId { get; set; }
-        private bool Acrobatics { get; set; }
-        private bool AnimalHandling { get; set; }
-        private bool Arcana { get; set; }
-        private bool Athletics { get; set; }
-        private bool Deception { get; set; }
-        private bool History { get; set; }
-        private bool Insight { get; set; }
-        private bool Intimidation { get; set; }
-        private bool Investigation { get; set; }
-        private bool Medicine { get; set; }
-        private bool Nature { get; set; }
-        private bool Perception { get; set; }
-        private bool Performance { get; set; }
-        private bool Persuasion { get; set; }
-        private bool Religion { get; set; }
-        private bool SleightOfHand { get; set; }
-        private bool Stealth { get; set; }
-        private bool Survival { get; set; }
+        [Key]
+        public Guid SkillsId { get; set; }
+
+        [ForeignKey("Proficiency")]
+        public Guid ProficiencyId { get; set; }
+        public bool Acrobatics { get; set; }
+        public bool AnimalHandling { get; set; }
+        public bool Arcana { get; set; }
+        public bool Athletics { get; set; }
+        public bool Deception { get; set; }
+        public bool History { get; set; }
+        public bool Insight { get; set; }
+        public bool Intimidation { get; set; }
+        public bool Investigation { get; set; }
+        public bool Medicine { get; set; }
+        public bool Nature { get; set; }
+        public bool Perception { get; set; }
+        public bool Performance { get; set; }
+        public bool Persuasion { get; set; }
+        public bool Religion { get; set; }
+        public bool SleightOfHand { get; set; }
+        public bool Stealth { get; set; }
+        public bool Survival { get; set; }
 
         public Skills()
         {
@@ -32,6 +37,7 @@ namespace CharacterManager.Models
 
         public Skills(bool acrobatics, bool animalHandling, bool arcana, bool athletics, bool deception, bool history, bool insight, bool intimidation, bool investigation, bool medicine, bool nature, bool perception, bool performance, bool persuasion, bool religion, bool sleightOfHand, bool stealth, bool survival)
         {
+            SkillsId = new Guid();
             Acrobatics = acrobatics;
             AnimalHandling = animalHandling;
             Arcana = arcana;

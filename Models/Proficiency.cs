@@ -1,17 +1,23 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CharacterManager.Models
 {
     public class Proficiency
     {
-        private Guid ProficiencyId { get; set; }
-        private Guid PlayerId { get; set; }
-        private Skills Skills { get; set; }
-        private SavingThrows SavingThrows { get; set; }
+        [Key]
+        public Guid ProficiencyId { get; set; }
+
+        [ForeignKey("Character")]
+        public Guid CharacterId { get; set; }
+        public Skills Skills { get; set; }
+        public SavingThrows SavingThrows { get; set; }
 
         public Proficiency() { }
         public Proficiency(SavingThrows savingThrows, Skills skills)
         {
+            ProficiencyId = Guid.Empty;
             SavingThrows = savingThrows;
             Skills = skills;
         }        

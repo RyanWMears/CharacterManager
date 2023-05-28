@@ -15,8 +15,8 @@ namespace CharacterManager.Controllers
 
         public IActionResult Index()
         {
-            //Player model = new Player();
-            //model = testPlayer(model);
+            //Character model = new Character();
+            //model = testCharacter(model);
             return View();
         }
 
@@ -28,27 +28,27 @@ namespace CharacterManager.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel { ErrorId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public ActionResult loadPlayerData()
+        public ActionResult loadCharacterData()
         {
-            Player model = new Player();
-            model = new Player(
-                "Saren",
-                1,
-                new AbilityScores(
-                    10, 15, 12, 10, 8, 16
-                    ),
-                new Proficiency(
-                    new SavingThrows(
-                        true, true, true, false, false, false
-                        ),
-                    new Skills(
-                        true, true, true, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false
-                        )
-                    )
-                );
+            Character model = new Character();
+            //model = new Character(
+            //    "Saren",
+            //    1,
+            //    new AbilityScores(
+            //        10, 15, 12, 10, 8, 16
+            //        ),
+            //    new Proficiency(
+            //        new SavingThrows(
+            //            true, true, true, false, false, false
+            //            ),
+            //        new Skills(
+            //            true, true, true, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false
+            //            )
+            //        )
+            //    );
             return Json(model);
         }
     }

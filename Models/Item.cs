@@ -1,21 +1,34 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
+using System.ComponentModel.DataAnnotations;
 
 namespace CharacterManager.Models
 {
     public class Item
     {
-        private Guid ItemId { get; set; }
-        private string Name { get; set; }
-        private double Weight { get; set; }
-        private int Value { get; set; }
-        private string Type { get; set; }
-        private bool Magic { get; set; }
-        private bool Attunement { get; set; }
-        private string Rarity { get; set; }
-        private string Source { get; set; }
+        [Key]
+        public Guid ItemId { get; set; }
+        public string Name { get; set; }
+        public double Weight { get; set; }
+        public int Value { get; set; }
+        public string Type { get; set; }
+        public bool Magic { get; set; }
+        public bool Attunement { get; set; }
+        public string Rarity { get; set; }
+        public string Source { get; set; }
 
         public Item() { }
 
-
+        public Item(string name, double weight, int value, string type, bool magic, bool attunement, string rarity, string source)
+        {
+            ItemId = new Guid();
+            Name = name;
+            Weight = weight;
+            Value = value;
+            Type = type;
+            Magic = magic;
+            Attunement = attunement;
+            Rarity = rarity;
+            Source = source;
+        }
     }
 }

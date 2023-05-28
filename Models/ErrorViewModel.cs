@@ -1,9 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CharacterManager.Models
 {
     public class ErrorViewModel
     {
-        public string? RequestId { get; set; }
+        [Key]
+        public string? ErrorId { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public bool ShowRequestId => !string.IsNullOrEmpty(ErrorId);
     }
 }

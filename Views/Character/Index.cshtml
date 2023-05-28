@@ -7,9 +7,9 @@
     <div id="newCharBtn"></div>
     <div id="form-demo">
         <div class="widget-container row">
-            <div id="select-player-text">Select player:</div>
-            <div id="select-player" class="mb-5"></div>
-            <div id="form-player" class=""></div>
+            <div id="select-character-text">Select Character:</div>
+            <div id="select-character" class="mb-5"></div>
+            <div id="form-character" class=""></div>
         </div>
        @* <div class="row">
             <div id="form-proficiency" class=""></div>
@@ -24,7 +24,7 @@
         key: 'Name',
         load(loadOptions) {
             const deferred = $.Deferred();    
-            const action = '@Url.Content("~/Character/loadPlayerData")';
+            const action = '@Url.Content("~/Character/loadCharacterData")';
             //const args = {};
             //[
             //    'skip',
@@ -112,7 +112,7 @@
         })
     }
     
-    //const players = [{
+    //const characters = [{
     //    Name: 'Animo', 
     //    Lvl: 1, 
     //    Str: 10,
@@ -141,7 +141,7 @@
     //    Cha: 8
     //}];
 
-    const players = {
+    const characters = {
         Name: 'Animo',
         Lvl: 1,
         Str: 10,
@@ -179,10 +179,10 @@
         survival : true    
     }];
 
-    const playerForm = $('#form-player').dxForm({
+    const characterForm = $('#form-character').dxForm({
         labelMode: 'static',
         readOnly: false,
-        formData: players,
+        formData: characters,
         showColonAfterLabel: true,
         labelLocation: 'left',
         minColWidth: 200,
@@ -199,17 +199,17 @@
         colCount: 2,
     }).dxForm('instance');
 
-    const playerSelectorSelectBox = $('#select-player').dxSelectBox({
+    const characterSelectorSelectBox = $('#select-character').dxSelectBox({
         displayExpr: 'Name',
-        dataSource: players,
+        dataSource: characters,
         labelMode: 'floating',
-        label: 'Select player',
-        value: players[0],
+        label: 'Select character',
+        value: characters[0],
         onValueChanged(data) {
-            playerForm.option('formData', data.value);
+            characterForm.option('formData', data.value);
         },
     }).dxSelectBox('instance');
 
-    const playerSelectorText = $('#select-player-text');
+    const characterSelectorText = $('#select-character-text');
 
 </script>
