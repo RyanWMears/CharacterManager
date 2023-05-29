@@ -1,0 +1,358 @@
+﻿@{
+    ViewData["Title"] = "Spells";
+}
+
+<div class="text-center row">
+    <h1 class="display-4">Spells</h1>
+    <div id="spellsGridContainer"></div>
+</div>
+
+<script>
+    //function isNotEmpty(value) {
+    //    return value !== undefined && value !== null && value !== '';
+    //}
+    //const store = new DevExpress.data.CustomStore({
+    //    key: 'SpellId',
+    //    load(loadOptions) {
+    //        const deferred = $.Deferred();
+
+    //        $.ajax({
+    //            url: '@Url.Content("~/Spell/loadSpellsData")',
+    //            dataType: 'json',
+    //            success(result) {
+    //                console.log("result");
+    //                console.log(result);
+    //                deferred.resolve(result.data);
+    //            },
+    //            error() {
+    //                deferred.reject('Data Loading Error');
+    //            },
+    //            timeout: 5000,
+    //        });
+
+    //        return deferred.promise();
+    //    },
+    //});
+
+    //$('#spellsGridContainer').dxDataGrid({
+    //    dataSource: store,
+    //    paging: {
+    //        pageSize: 10,
+    //    },
+    //    pager: {
+    //        showPageSizeSelector: true,
+    //        allowedPageSizes: [10, 25, 50, 100],
+    //    },
+    //    remoteOperations: false,
+    //    searchPanel: {
+    //        visible: true,
+    //        highlightCaseSensitive: true,
+    //    },
+    //    groupPanel: { visible: true },
+    //    grouping: {
+    //        autoExpandAll: false,
+    //    },
+    //    allowColumnReordering: true,
+    //    rowAlternationEnabled: true,
+    //    showBorders: true,
+        
+    //});
+    
+    function isNotEmpty(value) {
+        return value !== undefined && value !== null && value !== '';
+    }
+    var store = new DevExpress.data.CustomStore({
+        key: 'spellId',
+        load(loadOptions) {
+            const deferred = $.Deferred();
+            const args = {};
+
+            [
+                'skip',
+                'take',
+                'sort',
+                'filter',
+                'totalSummary',
+                'group',
+                'groupSummary',
+            ].forEach((i) => {
+                if (i in loadOptions && isNotEmpty(loadOptions[i])) {
+                    args[i] = JSON.stringify(loadOptions[i]);
+                }
+            });
+
+            $.ajax({
+                url: "@Url.Content("~/Spell/GetSpells")",
+                data: args,
+                success(result) {
+                    console.log("result");
+                    console.log(result);
+                    deferred.resolve(result, {
+                        totalCount: result.length
+                    });
+                },
+                error() {
+                    deferred.reject('Data Loading Error');
+                },
+                timeout: 5000,
+            });
+
+            return deferred.promise();
+        },
+        insert: function (values) {
+            const deferred = $.Deferred();
+            console.log("values");
+            console.log(values);
+            $.ajax({
+                url: "@Url.Content("~/Spell/AddSpell")",
+                data: values,
+                success(result) {
+                    deferred.resolve(result);
+                },
+                error() {
+                    deferred.reject('Data Loading Error');
+                },
+                timeout: 5000,
+            });
+
+            return deferred.promise();
+        },
+        //insert(values) {
+        //    return sendRequest("@Url.Content("~/Spell/AddSpell")", 'POST', {
+        //        values: JSON.stringify(values),
+        //    });
+        //},
+        remove(key) {
+            return sendRequest("@Url.Content("~/Spell/DeleteSpell")", 'DELETE', {
+                key,
+            });
+        },
+    });
+
+    $('#spellsGridContainer').dxDataGrid({
+        dataSource: store,
+        //dataSource: DevExpress.data.AspNet.createStore({
+        //    key: 'spellId',
+        //    loadUrl     : "@Url.Content("~/Spell/GetSpells")",
+        //    insertUrl   : "@Url.Content("~/Spell/AddSpell")"
+        //    //updateUrl   : `${url}/UpdateOrder`,
+        //    //deleteUrl   : `${url}/DeleteOrder`,
+        //}),
+        remoteOperations: false,
+        columns: [
+            {
+                dataField: 'name',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'level',
+                dataType: 'number',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'description',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'school',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'concentration',
+                dataType: 'boolean',
+            },
+            {
+                dataField: 'castingTime',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'range',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'duration',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'components',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'saveDC',
+                dataType: 'number',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'spellLists',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'materials',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'upcast',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+            {
+                dataField: 'source',
+                dataType: 'string',
+                validationRules: [{ type: 'required' }],
+            },
+        ],
+        paging: {
+            pageSize: 10,
+        },
+        pager: {
+            visible: true,
+            allowedPageSizes: [5, 10, 25, 50, 100],
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavigationButtons: true,
+        },
+        filterRow: {
+            visible: true,
+        },
+        headerFilter: {
+            visible: true,
+        },
+        groupPanel: {
+            visible: true,
+        },
+        scrolling: {
+            mode: 'virtual',
+        },
+        height: 600,
+        showBorders: true,
+        grouping: {
+            autoExpandAll: false,
+        },
+        editing: {
+            allowAdding: true,
+            allowUpdating: true,
+            allowDeleting: true,
+        },
+    });
+
+    //$('#spellsGridContainer').dxDataGrid({
+    //    dataSource: DevExpress.data.AspNet.createStore({
+    //        key: 'SpellId',
+    //        loadUrl: "@Url.Content("~/Spells/GetSpells2")",
+    //    }),
+    //    remoteOperations: true,
+    //    columns: [
+    //        {
+    //            dataField: 'name',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'level',
+    //            dataType: 'number',
+    //        },
+    //        {
+    //            dataField: 'description',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'school',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'concentration',
+    //        },
+    //        {
+    //            dataField: 'castingTime',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'range',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'duration',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'components',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'saveDC',
+    //            dataType: 'number',
+    //        },
+    //        {
+    //            dataField: 'spellLists',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'materials',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'upcast',
+    //            dataType: 'string',
+    //        },
+    //        {
+    //            dataField: 'source',
+    //            dataType: 'string',
+    //        },
+    //    ],
+    //    filterRow: {
+    //        visible: true,
+    //    },
+    //    headerFilter: {
+    //        visible: true,
+    //    },
+    //    groupPanel: {
+    //        visible: true,
+    //    },
+    //    scrolling: {
+    //        mode: 'virtual',
+    //    },
+    //    height: 600,
+    //    showBorders: true,
+    //    grouping: {
+    //        autoExpandAll: false,
+    //    },
+    //});
+
+    function sendRequest(url, method = 'GET', data) {
+        const d = $.Deferred();
+
+        //logRequest(method, url, data);
+        console.log("data");
+        console.log(data);
+        $.ajax(url, {
+            method,
+            data,
+            cache: false,
+            xhrFields: { withCredentials: true },
+        }).done((result) => {
+            d.resolve(method === 'GET' ? result.data : result);
+        }).fail((xhr) => {
+            d.reject(xhr.responseJSON ? xhr.responseJSON.Message : xhr.statusText);
+        });
+
+        return d.promise();
+    }
+
+    function logRequest(method, url, data) {
+        const args = Object.keys(data || {}).map((key) => `${key}=${data[key]}`).join(' ');
+
+        const logList = $('#requests ul');
+        const time = DevExpress.localization.formatDate(new Date(), 'HH:mm:ss');
+        const newItem = $('<li>').text([time, method, url.slice(URL.length), args].join(' '));
+
+        logList.prepend(newItem);
+    }
+</script>

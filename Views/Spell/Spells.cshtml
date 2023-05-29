@@ -1,0 +1,146 @@
+﻿@{
+    ViewData["Title"] = "Spells";
+}
+
+<div class="text-center viewContainer">
+    <h1 class="display-4">Spells</h1>
+    <div id="spellsGridContainer"></div>
+</div>
+
+<script>
+    //function isNotEmpty(value) {
+    //    return value !== undefined && value !== null && value !== '';
+    //}
+    //const store = new DevExpress.data.CustomStore({
+    //    key: 'SpellId',
+    //    load(loadOptions) {
+    //        const deferred = $.Deferred();
+
+    //        $.ajax({
+    //            url: '@Url.Content("~/Spell/loadSpellsData")',
+    //            dataType: 'json',
+    //            success(result) {
+    //                console.log("result");
+    //                console.log(result);
+    //                deferred.resolve(result.data);
+    //            },
+    //            error() {
+    //                deferred.reject('Data Loading Error');
+    //            },
+    //            timeout: 5000,
+    //        });
+
+    //        return deferred.promise();
+    //    },
+    //});
+
+    //$('#spellsGridContainer').dxDataGrid({
+    //    dataSource: store,
+    //    paging: {
+    //        pageSize: 10,
+    //    },
+    //    pager: {
+    //        showPageSizeSelector: true,
+    //        allowedPageSizes: [10, 25, 50, 100],
+    //    },
+    //    remoteOperations: false,
+    //    searchPanel: {
+    //        visible: true,
+    //        highlightCaseSensitive: true,
+    //    },
+    //    groupPanel: { visible: true },
+    //    grouping: {
+    //        autoExpandAll: false,
+    //    },
+    //    allowColumnReordering: true,
+    //    rowAlternationEnabled: true,
+    //    showBorders: true,
+        
+    //});
+    const url = '@Url.Content("~/Spell")';
+    $('#spellsGridContainer').dxDataGrid({
+        dataSource: DevExpress.data.AspNet.createStore({
+            key: 'SpellId',
+            loadUrl: `${url}/GetSpells`
+        }),
+        remoteOperations: true,
+        columns: [
+            {
+                dataField: 'SpellId',
+            },
+            {
+                dataField: 'Name',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Level',
+                dataType: 'number',
+            },
+            {
+                dataField: 'Description',
+                dataType: 'string',
+            },
+            {
+                dataField: 'School',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Concentration',
+            },
+            {
+                dataField: 'CastingTime',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Range',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Duration',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Components',
+                dataType: 'string',
+            },
+            {
+                dataField: 'SaveDC',
+                dataType: 'number',
+            },
+            {
+                dataField: 'SpellLists',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Materials',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Upcast',
+                dataType: 'string',
+            },
+            {
+                dataField: 'Source',
+                dataType: 'string',
+            },
+        ],
+        filterRow: {
+            visible: true,
+        },
+        headerFilter: {
+            visible: true,
+        },
+        groupPanel: {
+            visible: true,
+        },
+        scrolling: {
+            mode: 'virtual',
+        },
+        height: 600,
+        showBorders: true,
+        grouping: {
+            autoExpandAll: false,
+        },
+    });
+
+</script>

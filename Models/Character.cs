@@ -13,7 +13,14 @@ namespace CharacterManager.Models
         public Guid GameId { get; set; }
         public string Name { get; set; }
         public int Level { get; set; }
-        public Proficiency proficiency { get; set; }
+        [NotMapped]
+        public Proficiency Proficiency { get; set; }
+        [NotMapped]
+        public List<Item>? Items { get; set; }
+        [NotMapped]
+        public List<Spell>? SpellsKnown { get; set; }
+        [NotMapped]
+        public List<Spell>? SpellsPrepared { get; set; } 
         public int ProficiencyBonus
         {
             get

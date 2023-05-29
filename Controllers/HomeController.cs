@@ -16,9 +16,11 @@ namespace CharacterManager.Controllers
 
         public IActionResult Index()
         {
-            var test = new ApplicationDBContext();
-            var tester = test.Games.First();
             return View();
+        }
+        public IActionResult Spells()
+        {
+            return View("Spells");
         }
 
         public IActionResult Privacy()

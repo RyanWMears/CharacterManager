@@ -1,23 +1,23 @@
 ﻿using CharacterManager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace CharacterManager.DAL
 {
     public class ApplicationDBContext : DbContext
     {
         private readonly IConfiguration _configuration;
-        public ApplicationDBContext(IConfiguration configuration) {
-            _configuration = configuration;
-        }
-
         public ApplicationDBContext()
         {
         }
-
+        public ApplicationDBContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("CharacterManagerDB"));
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-DRN913K;Initial Catalog=CharacterManager;Integrated Security=True;TrustServerCertificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

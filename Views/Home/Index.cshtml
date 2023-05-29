@@ -6,11 +6,19 @@
 <div class="text-center">
     <h1 class="display-4">Character Manager</h1>
     <a id="newCharBtn" class="navbar-brand" asp-area="" asp-controller="Character" asp-action="Index">New Character</a>
+    <a id="spellsBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Spells">Spells</a>
 </div>
 
 
 <script>
     $('#newCharBtn').dxButton({
+        stylingMode: 'contained',
+        text: 'Contained',
+        type: 'success',
+        height: 120,
+        width: 320
+    });
+    $('#spellsBtn').dxButton({
         stylingMode: 'contained',
         text: 'Contained',
         type: 'success',
