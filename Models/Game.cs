@@ -9,6 +9,8 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid GameId { get; set; }
+        [Required]
+        [StringLength(100)]
         public string Name { get; set; }
 
         public Game() { }

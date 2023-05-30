@@ -13,5 +13,10 @@ namespace CharacterManager.Models
         [ForeignKey("Class")]
         public Guid ClassId { get; set; }
         public CharacterClass() { }
+        public CharacterClass(Guid characterId, Guid classId) {
+            CharacterClassId    = new Guid();
+            CharacterId         = characterId;
+            ClassId             = classId;
+        }
     }
 }

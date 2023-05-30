@@ -14,7 +14,11 @@ namespace CharacterManager.Models
         public Skills Skills { get; set; }
         public SavingThrows SavingThrows { get; set; }
 
-        public Proficiency() { }
+        public Proficiency() {
+            ProficiencyId = Guid.Empty;
+            SavingThrows = new SavingThrows();
+            Skills = new Skills();
+        }
         public Proficiency(SavingThrows savingThrows, Skills skills)
         {
             ProficiencyId = Guid.Empty;

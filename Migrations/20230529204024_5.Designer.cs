@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterManager.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230528030022_CharacterManager")]
-    partial class CharacterManager
+    [Migration("20230529204024_5")]
+    partial class _5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,7 +89,8 @@ namespace CharacterManager.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CharacterId");
 
@@ -122,13 +123,54 @@ namespace CharacterManager.Migrations
                     b.Property<int>("ClassLevel")
                         .HasColumnType("int");
 
+                    b.Property<int>("DieSize")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HitDie")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("ClassId");
 
                     b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("CharacterManager.Models.ClassFeat", b =>
+                {
+                    b.Property<Guid>("ClassFeatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Prerequisite")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ClassFeatId");
+
+                    b.ToTable("ClassFeats");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.ErrorViewModel", b =>
@@ -141,6 +183,42 @@ namespace CharacterManager.Migrations
                     b.ToTable("ErrorViewModels");
                 });
 
+            modelBuilder.Entity("CharacterManager.Models.Feat", b =>
+                {
+                    b.Property<Guid>("FeatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Prerequisite")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("FeatId");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("Feats");
+                });
+
             modelBuilder.Entity("CharacterManager.Models.Game", b =>
                 {
                     b.Property<Guid>("GameId")
@@ -149,7 +227,8 @@ namespace CharacterManager.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("GameId");
 
@@ -170,19 +249,23 @@ namespace CharacterManager.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Rarity")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Source")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
@@ -209,6 +292,27 @@ namespace CharacterManager.Migrations
                     b.HasKey("ProficiencyId");
 
                     b.ToTable("Proficiencies");
+                });
+
+            modelBuilder.Entity("CharacterManager.Models.Race", b =>
+                {
+                    b.Property<Guid>("RaceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("RaceId");
+
+                    b.ToTable("Races");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.SavingThrows", b =>
@@ -325,57 +429,67 @@ namespace CharacterManager.Migrations
 
                     b.Property<string>("CastingTime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Components")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("Concentration")
                         .HasColumnType("bit");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.Property<string>("Duration")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
 
                     b.Property<string>("Materials")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Range")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("SaveDC")
                         .HasColumnType("int");
 
                     b.Property<string>("School")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Source")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SpellLists")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Upcast")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.HasKey("SpellId");
 
@@ -386,9 +500,8 @@ namespace CharacterManager.Migrations
                 {
                     b.HasBaseType("CharacterManager.Models.Item");
 
-                    b.Property<string>("AC")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AC")
+                        .HasColumnType("int");
 
                     b.ToTable("Armor");
                 });
@@ -403,16 +516,27 @@ namespace CharacterManager.Migrations
                     b.Property<int>("DieSize")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaxRange")
-                        .HasColumnType("int");
+                    b.Property<string>("MaxRange")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("NumberOfDie")
                         .HasColumnType("int");
 
-                    b.Property<int>("Range")
-                        .HasColumnType("int");
+                    b.Property<string>("Range")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.ToTable("Weapons");
+                });
+
+            modelBuilder.Entity("CharacterManager.Models.Feat", b =>
+                {
+                    b.HasOne("CharacterManager.Models.Class", null)
+                        .WithMany("classFeatures")
+                        .HasForeignKey("ClassId");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.SavingThrows", b =>
@@ -449,6 +573,11 @@ namespace CharacterManager.Migrations
                         .HasForeignKey("CharacterManager.Models.Weapon", "ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CharacterManager.Models.Class", b =>
+                {
+                    b.Navigation("classFeatures");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.Proficiency", b =>

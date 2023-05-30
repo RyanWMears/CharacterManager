@@ -12,11 +12,17 @@ namespace CharacterManager.Models
 
         [ForeignKey("Character")]
         public Guid CharacterId { get; set; }
+        [Required]
         public int Strength { get; set; }
+        [Required]
         public int Dexterity { get; set; }
+        [Required]
         public int Constitution { get; set; }
+        [Required]
         public int Intelligence { get; set; }
+        [Required]
         public int Wisdom { get; set; }
+        [Required]
         public int Charisma { get; set; }
 
         public int StrBonus { get; set; }
@@ -26,7 +32,22 @@ namespace CharacterManager.Models
         public int WisBonus { get; set; }
         public int ChaBonus { get; set; }
 
-        public AbilityScores() { }
+        public AbilityScores() {
+            AbilityScoresId = Guid.NewGuid();
+            Strength = 10;
+            Dexterity = 10;
+            Constitution = 10;
+            Intelligence = 10;
+            Wisdom = 10;
+            Charisma = 10;
+
+            StrBonus = (Strength - 10) / 2;
+            DexBonus = (Dexterity - 10) / 2;
+            ConBonus = (Constitution - 10) / 2;
+            IntBonus = (Intelligence - 10) / 2;
+            WisBonus = (Wisdom - 10) / 2;
+            ChaBonus = (Charisma - 10) / 2;
+        }
         public AbilityScores(int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma)
         {
             AbilityScoresId = Guid.NewGuid();   

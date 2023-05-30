@@ -30,10 +30,13 @@ namespace CharacterManager.DAL
         public DbSet<Character> Characters { get; set; }
         public DbSet<CharacterClass> CharacterClasses { get; set; }
         public DbSet<Class> Classes { get; set; }
+        public DbSet<ClassFeat> ClassFeats { get; set; }
         public DbSet<ErrorViewModel> ErrorViewModels { get; set; }
+        public DbSet<Feat> Feats { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Proficiency> Proficiencies { get; set; }
+        public DbSet<Race> Races { get; set; }
         public DbSet<SavingThrows> SavingThrows { get; set; }
         public DbSet<Skills> Skills { get; set; }
         public DbSet<Spell> Spells { get; set; }

@@ -1,37 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "Spells";
+    ViewData["Title"] = "Races";
 }
 
 <div style="min-height: 90vh!important;" class="text-center row h-100">
-    <h1 class="display-4">Spells</h1>
-    <div id="spellsGridContainer"></div>
+    <h1 class="display-4">Races</h1>
+    <div id="racesGridContainer"></div>
 </div>
 
 <script>
     var store = new DevExpress.data.CustomStore({
-        key: 'spellId',
+        key: 'raceId',
         load() {
-            return sendRequest("@Url.Content("~/Spell/GetSpells")");
+            return sendRequest("@Url.Content("~/Race/GetRaces")");
         },
         insert(values) {
-            return sendRequest("@Url.Content("~/Spell/AddSpell")", 'POST', {
+            return sendRequest("@Url.Content("~/Race/AddRace")", 'POST', {
                 values: JSON.stringify(values),
             });
         },
         update(key, values) {
-            return sendRequest("@Url.Content("~/Spell/EditSpell")", 'POST', {
+            return sendRequest("@Url.Content("~/Race/EditRace")", 'POST', {
                 key,
                 values: JSON.stringify(values),
             });
         },
         remove(key) {
-            return sendRequest("@Url.Content("~/Spell/DeleteSpell")", 'POST', {
+            return sendRequest("@Url.Content("~/Race/DeleteRace")", 'POST', {
                 key,
             });
         },
     });
 
-    $('#spellsGridContainer').dxDataGrid({
+    $('#racesGridContainer').dxDataGrid({
         dataSource: store,
         remoteOperations: false,
         columns: [
@@ -40,52 +40,27 @@
                 dataType: 'string',
             },
             {
-                dataField: 'level',
-                dataType: 'number',
+                dataField: 'ability',
+                dataType: 'string',
+            },
+            {
+                dataField: 'size',
+                dataType: 'string',
+            },
+            {
+                dataField: 'speed',
+                dataType: 'string',
+            },
+            {
+                dataField: 'language',
+                dataType: 'string',
             },
             {
                 dataField: 'description',
                 dataType: 'string',
             },
             {
-                dataField: 'school',
-                dataType: 'string',
-            },
-            {
-                dataField: 'concentration',
-                dataType: 'boolean',
-                value: false,
-            },
-            {
-                dataField: 'castingTime',
-                dataType: 'string',
-            },
-            {
-                dataField: 'range',
-                dataType: 'string',
-            },
-            {
-                dataField: 'duration',
-                dataType: 'string',
-            },
-            {
-                dataField: 'components',
-                dataType: 'string',
-            },
-            {
-                dataField: 'saveDC',
-                dataType: 'number',
-            },
-            {
-                dataField: 'spellLists',
-                dataType: 'string',
-            },
-            {
-                dataField: 'materials',
-                dataType: 'string',
-            },
-            {
-                dataField: 'upcast',
+                dataField: 'type',
                 dataType: 'string',
             },
             {

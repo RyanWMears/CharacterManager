@@ -11,6 +11,8 @@ namespace CharacterManager.Models
 
         [ForeignKey("Game")]
         public Guid GameId { get; set; }
+        [Required]
+        [StringLength(100)]
         public string Name { get; set; }
         public int Level { get; set; }
         [NotMapped]

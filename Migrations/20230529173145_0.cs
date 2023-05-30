@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CharacterManager.Migrations
 {
     /// <inheritdoc />
-    public partial class CharacterManager : Migration
+    public partial class _0 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,7 +41,7 @@ namespace CharacterManager.Migrations
                 {
                     CharacterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GameId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -67,7 +67,7 @@ namespace CharacterManager.Migrations
                 columns: table => new
                 {
                     ClassId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ClassLevel = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -91,7 +91,7 @@ namespace CharacterManager.Migrations
                 columns: table => new
                 {
                     GameId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,14 +103,14 @@ namespace CharacterManager.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Weight = table.Column<double>(type: "float", nullable: false),
-                    Value = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<int>(type: "int", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Magic = table.Column<bool>(type: "bit", nullable: false),
                     Attunement = table.Column<bool>(type: "bit", nullable: false),
-                    Rarity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Rarity = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Source = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,20 +134,20 @@ namespace CharacterManager.Migrations
                 columns: table => new
                 {
                     SpellId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Level = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    School = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
+                    School = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Concentration = table.Column<bool>(type: "bit", nullable: false),
-                    CastingTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Range = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duration = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Components = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SaveDC = table.Column<int>(type: "int", nullable: false),
-                    SpellLists = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Materials = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Upcast = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CastingTime = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Range = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Components = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    SaveDC = table.Column<int>(type: "int", nullable: true),
+                    SpellLists = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Materials = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Upcast = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
+                    Source = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -159,7 +159,7 @@ namespace CharacterManager.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AC = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AC = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -177,8 +177,8 @@ namespace CharacterManager.Migrations
                 columns: table => new
                 {
                     ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Range = table.Column<int>(type: "int", nullable: false),
-                    MaxRange = table.Column<int>(type: "int", nullable: false),
+                    Range = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    MaxRange = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     NumberOfDie = table.Column<int>(type: "int", nullable: false),
                     DieSize = table.Column<int>(type: "int", nullable: false),
                     Bonus = table.Column<int>(type: "int", nullable: false)

@@ -4,6 +4,7 @@ using CharacterManager.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterManager.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230529221118_6")]
+    partial class _6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,11 +123,6 @@ namespace CharacterManager.Migrations
                     b.Property<int>("ClassLevel")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
                     b.Property<int>("HitDie")
                         .HasColumnType("int");
 
@@ -186,6 +184,9 @@ namespace CharacterManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(4000)
@@ -207,6 +208,8 @@ namespace CharacterManager.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("FeatId");
+
+                    b.HasIndex("ClassId");
 
                     b.ToTable("Feats");
                 });
@@ -292,42 +295,12 @@ namespace CharacterManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Ability")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
-                    b.Property<string>("Language")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("Source")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Speed")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Type")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -554,6 +527,13 @@ namespace CharacterManager.Migrations
                     b.ToTable("Weapons");
                 });
 
+            modelBuilder.Entity("CharacterManager.Models.Feat", b =>
+                {
+                    b.HasOne("CharacterManager.Models.Class", null)
+                        .WithMany("classFeatures")
+                        .HasForeignKey("ClassId");
+                });
+
             modelBuilder.Entity("CharacterManager.Models.SavingThrows", b =>
                 {
                     b.HasOne("CharacterManager.Models.Proficiency", null)
@@ -588,6 +568,11 @@ namespace CharacterManager.Migrations
                         .HasForeignKey("CharacterManager.Models.Weapon", "ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CharacterManager.Models.Class", b =>
+                {
+                    b.Navigation("classFeatures");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.Proficiency", b =>

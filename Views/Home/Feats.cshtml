@@ -1,0 +1,213 @@
+﻿@{
+    ViewData["Title"] = "Feats";
+}
+
+<div style="min-height: 90vh!important;" class="text-center row h-100">
+    <h1 class="display-4">Feats</h1>
+    <div id="featsGridContainer"></div>
+    <h1 class="display-4">Class Feats</h1>
+    <div id="classFeatsGridContainer"></div>
+</div>
+
+<script>
+    var storeFeats = new DevExpress.data.CustomStore({
+        key: 'featId',
+        load() {
+            return sendRequest("@Url.Content("~/Feat/GetFeats")");
+        },
+        insert(values) {
+            return sendRequest("@Url.Content("~/Feat/AddFeat")", 'POST', {
+                values: JSON.stringify(values),
+            });
+        },
+        update(key, values) {
+            return sendRequest("@Url.Content("~/Feat/EditFeat")", 'POST', {
+                key,
+                values: JSON.stringify(values),
+            });
+        },
+        remove(key) {
+            return sendRequest("@Url.Content("~/Feat/DeleteFeat")", 'POST', {
+                key,
+            });
+        },
+    });
+
+    var storeClassFeats = new DevExpress.data.CustomStore({
+        key: 'classFeatId',
+        load() {
+            return sendRequest("@Url.Content("~/Feat/GetClassFeats")");
+        },
+        insert(values) {
+            return sendRequest("@Url.Content("~/Feat/AddClassFeat")", 'POST', {
+                values: JSON.stringify(values),
+            });
+        },
+        update(key, values) {
+            return sendRequest("@Url.Content("~/Feat/EditClassFeat")", 'POST', {
+                key,
+                values: JSON.stringify(values),
+            });
+        },
+        remove(key) {
+            return sendRequest("@Url.Content("~/Feat/DeleteClassFeat")", 'POST', {
+                key,
+            });
+        },
+    });
+
+    $('#featsGridContainer').dxDataGrid({
+        dataSource: storeFeats,
+        remoteOperations: false,
+        columns: [
+            {
+                dataField: 'name',
+                dataType: 'string',
+            },
+            {
+                dataField: 'description',
+                dataType: 'string',
+            },
+            {
+                dataField: 'prerequisite',
+                dataType: 'string',
+            },
+            {
+                dataField: 'source',
+                dataType: 'string',
+            },
+        ],
+        paging: {
+            pageSize: 10,
+        },
+        pager: {
+            visible: true,
+            allowedPageSizes: [5, 10, 25, 50, 100],
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavigationButtons: true,
+        },
+        filterRow: {
+            visible: true,
+        },
+        headerFilter: {
+            visible: true,
+        },
+        groupPanel: {
+            visible: true,
+        },
+        scrolling: {
+            mode: 'virtual',
+        },
+        height: 600,
+        showBorders: true,
+        grouping: {
+            autoExpandAll: false,
+        },
+        editing: {
+            allowAdding: true,
+            allowUpdating: true,
+            allowDeleting: true,
+        },
+    });
+
+    $('#classFeatsGridContainer').dxDataGrid({
+        dataSource: storeClassFeats,
+        remoteOperations: false,
+        columns: [
+            {
+                dataField: 'name',
+                dataType: 'string',
+            },
+            {
+                dataField: 'description',
+                dataType: 'string',
+            },
+            {
+                dataField: 'classId',
+                caption: 'Class',
+                dataType: 'string',
+                lookup: {
+                    dataSource: new DevExpress.data.CustomStore({
+                        key: 'classId',
+                        loadMode: 'raw',
+                        load() {
+                            return sendRequest("@Url.Content("~/Class/GetClasses")");
+                        },
+                    }),
+                    valueExpr: 'classId',
+                    displayExpr: 'name',
+                },
+            },
+            {
+                dataField: 'level',
+                dataType: 'string',
+            },
+            {
+                dataField: 'source',
+                dataType: 'string',
+            },
+        ],
+        paging: {
+            pageSize: 10,
+        },
+        pager: {
+            visible: true,
+            allowedPageSizes: [5, 10, 25, 50, 100],
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavigationButtons: true,
+        },
+        filterRow: {
+            visible: true,
+        },
+        headerFilter: {
+            visible: true,
+        },
+        groupPanel: {
+            visible: true,
+        },
+        scrolling: {
+            mode: 'virtual',
+        },
+        height: 600,
+        showBorders: true,
+        grouping: {
+            autoExpandAll: false,
+        },
+        editing: {
+            allowAdding: true,
+            allowUpdating: true,
+            allowDeleting: true,
+        },
+    });
+
+    function sendRequest(url, method = 'GET', data) {
+        const d = $.Deferred();
+
+        //logRequest(method, url, data);
+
+        $.ajax(url, {
+            method,
+            data,
+            cache: false,
+            xhrFields: { withCredentials: true },
+        }).done((result) => {
+            d.resolve(method === 'GET' ? result : result);
+        }).fail((xhr) => {
+            d.reject(xhr.responseJSON ? xhr.responseJSON.Message : xhr.statusText);
+        });
+
+        return d.promise();
+    }
+
+    function logRequest(method, url, data) {
+        const args = Object.keys(data || {}).map((key) => `${key}=${data[key]}`).join(' ');
+
+        const logList = $('#requests ul');
+        const time = DevExpress.localization.formatDate(new Date(), 'HH:mm:ss');
+        const newItem = $('<li>').text([time, method, url.slice(URL.length), args].join(' '));
+
+        logList.prepend(newItem);
+    }
+</script>

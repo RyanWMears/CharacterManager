@@ -8,12 +8,12 @@ using System.Diagnostics;
 
 namespace CharacterManager.Controllers
 {
-    public class SpellController : Controller
+    public class ClassController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         protected ApplicationDBContext _context = new ApplicationDBContext();
 
-        public SpellController(ILogger<HomeController> logger)
+        public ClassController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
@@ -24,29 +24,29 @@ namespace CharacterManager.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetSpells()
+        public JsonResult GetClasses()
         {
-            List<Spell> output = _context.Spells.OrderBy(x => x.Name).ToList();
+            List<Class> output = _context.Classes.OrderBy(x => x.Name).ToList();
 
             return Json(output);
         }
 
         [HttpPost]
-        public void AddSpell(string values)
+        public void AddClass(string values)
         {
             if (ModelState.IsValid) {
-                Spell model = new Spell();
+                Class model = new Class();
                 JsonConvert.PopulateObject(values, model);
-                _context.Spells.Add(model);
+                _context.Classes.Add(model);
 
                 _context.SaveChanges();
             }
         }
 
         [HttpPost]
-        public void EditSpell(Guid key, string values)
+        public void EditClass(Guid key, string values)
         {
-            var model = _context.Spells.Where(x => x.SpellId == key).FirstOrDefault();
+            var model = _context.Classes.Where(x => x.ClassId == key).FirstOrDefault();
             if (model != null)
             {
                 JsonConvert.PopulateObject(values, model);
@@ -56,12 +56,12 @@ namespace CharacterManager.Controllers
         }
 
         [HttpPost]
-        public void DeleteSpell(Guid key)
+        public void DeleteClass(Guid key)
         {
-            var model = _context.Spells.Where(x => x.SpellId == key).FirstOrDefault();
+            var model = _context.Classes.Where(x => x.ClassId == key).FirstOrDefault();
             if (model != null)
             {
-                _context.Spells.Remove(model);
+                _context.Classes.Remove(model);
                 _context.SaveChanges();
             }
         }

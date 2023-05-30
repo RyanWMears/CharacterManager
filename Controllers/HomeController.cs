@@ -18,11 +18,23 @@ namespace CharacterManager.Controllers
         {
             return View();
         }
+        public IActionResult Class()
+        {
+            return View("Classes");
+        }
+        public IActionResult Feats()
+        {
+            return View("Feats");
+        }
+        public IActionResult Races()
+        {
+            return View("Races");
+        }
         public IActionResult Spells()
         {
             return View("Spells");
         }
-
+        
         public IActionResult Privacy()
         {
 

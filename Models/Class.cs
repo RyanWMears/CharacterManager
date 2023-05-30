@@ -8,16 +8,54 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid ClassId { get; set; }
+        [Required]
+        [StringLength(100)]
         public string Name { get; set; }
-        public int ClassLevel { get; set; }
+        [Required]
+        [StringLength(4000)]
+        public string Description { get; set; }
+        [Required]
+        public int ClassLevel { get; set; } = 0;
+        [Required]
+        public int HitDie { get; set; } = 1;
 
-        public Class() { }
-        public Class(Guid classId, string name, int classLevel)
+        public Class()
+        {
+            Name = "";
+            ClassLevel = 0;
+            HitDie = 1;
+            Description = "";
+        }
+        public Class(string name, int classLevel, int hitDie, string description)
         {
             ClassId = new Guid();
-            ClassId = classId;
             Name = name;
             ClassLevel = classLevel;
+            HitDie = hitDie;
+            Description = description;
+        }
+    }
+
+    [Table("SubClasses")]
+    public class SubClass
+    {
+        [Key]
+        public Guid SubClassId { get; set; }
+        [Required]
+        [ForeignKey("Class")]
+        public Guid ClassId { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        public SubClass()
+        {
+            Name = "";
+        }
+        public SubClass(string name)
+        {
+            ClassId = new Guid();
+            Name = name;
         }
     }
 }
