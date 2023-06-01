@@ -65,6 +65,32 @@ namespace CharacterManager.Controllers
                 _context.SaveChanges();
             }
         }
+        public IActionResult _ViewClass(Guid key)
+        {
+            if (key != Guid.Empty)
+            {
+                var model = _context.Classes.Where(x => x.ClassId == key).FirstOrDefault();
+                if (ModelState.IsValid)
+                {
+                    return PartialView("_ViewClass", model);
+                }
+            }
+            return PartialView("_ViewClass", null);
+        }
+
+        public IActionResult _EditClass(Guid key)
+        {
+            Class model = new Class();
+            if (key != Guid.Empty && key != null)
+            {
+                model = _context.Classes.Where(x => x.ClassId == key).FirstOrDefault();
+                if (ModelState.IsValid)
+                {
+                    return PartialView("_EditClass", model);
+                }
+            }
+            return PartialView("_EditClass", null);
+        }
 
         public IActionResult Privacy()
         {

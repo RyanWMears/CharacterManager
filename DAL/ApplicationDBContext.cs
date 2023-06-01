@@ -7,14 +7,17 @@ namespace CharacterManager.DAL
 {
     public class ApplicationDBContext : DbContext
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IConfiguration _configuration;
         public ApplicationDBContext()
         {
         }
-        public ApplicationDBContext(IConfiguration configuration)
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options, IWebHostEnvironment webHostEnvironment, IConfiguration configuration) : base(options)
         {
+            _webHostEnvironment = webHostEnvironment;
             _configuration = configuration;
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-DRN913K;Initial Catalog=CharacterManager;Integrated Security=True;TrustServerCertificate=True");
