@@ -18,6 +18,8 @@ namespace CharacterManager.Models
         public int ClassLevel { get; set; } = 0;
         [Required]
         public int HitDie { get; set; } = 1;
+        [StringLength(100)]
+        public string Source { get; set; }
 
         public Class()
         {
@@ -47,6 +49,8 @@ namespace CharacterManager.Models
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+        [StringLength(100)]
+        public string Source { get; set; }
 
         public SubClass()
         {

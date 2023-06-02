@@ -1,79 +1,60 @@
 ﻿@{
-    ViewData["Title"] = "Classes";
-    Layout = "_Layout";
+    ViewData["Title"] = "Languages";
 }
 
 <div style="min-height: 90vh!important;" class="text-center row h-100">
-    <h1 class="display-4">Classes</h1>
-    <div id="classGridContainer"></div>
+    <h1 class="display-4">Languages</h1>
+    <div id="languagesGridContainer"></div>
 </div>
 
 <script>
-    var myModal = new bootstrap.Modal($("#globalModal"), {
-        keyboard: false
-    });
-
     var store = new DevExpress.data.CustomStore({
-        key: 'classId',
+        key: 'languageId',
         load() {
-            return sendRequest("@Url.Content("~/Class/GetClasses")");
+            return sendRequest("@Url.Content("~/Language/GetLanguages")");
         },
         insert(values) {
-            return sendRequest("@Url.Content("~/Class/AddClass")", 'POST', {
+            return sendRequest("@Url.Content("~/Language/AddLanguage")", 'POST', {
                 values: JSON.stringify(values),
             });
         },
         update(key, values) {
-            return sendRequest("@Url.Content("~/Class/EditClass")", 'POST', {
+            return sendRequest("@Url.Content("~/Language/EditLanguage")", 'POST', {
                 key,
                 values: JSON.stringify(values),
             });
         },
         remove(key) {
-            return sendRequest("@Url.Content("~/Class/DeleteClass")", 'POST', {
+            return sendRequest("@Url.Content("~/Language/DeleteLanguage")", 'POST', {
                 key,
             });
         },
     });
- 
-    $('#classGridContainer').dxDataGrid({
+
+    $('#languagesGridContainer').dxDataGrid({
         dataSource: store,
         remoteOperations: false,
         columns: [
-            {
-                type: 'buttons',
-                width: 110,
-                buttons: [{
-                    hint: 'edit',
-                    icon: 'edit',
-                    visible(e) {
-                        return !e.row.isEditing;
-                    },
-                    onClick(e) {
-                        myModal.toggle();
-                        $("#globalModalBody").load("@Url.Action("_ViewClass","Class")", { key: e.row.key });
-                    },
-                }],
-            },
             {
                 dataField: 'name',
                 dataType: 'string',
             },
             {
-                dataField: 'hitDie',
-                dataType: 'number',
+                dataField: 'type',
+                dataType: 'string',
             },
             {
-                dataField: 'description',
+                dataField: 'script',
                 dataType: 'string',
-                formItem: {
-                    colSpan: 2,
-                    editorType: 'dxTextArea',
-                    editorOptions: {
-                        height: 100,
-                    },
-                }
-            }
+            },
+            {
+                dataField: 'typicalSpeakers',
+                dataType: 'string',
+            },
+            {
+                dataField: 'source',
+                dataType: 'string',
+            },
         ],
         paging: {
             pageSize: 10,
@@ -108,12 +89,8 @@
             allowUpdating: true,
             allowDeleting: true,
         },
-        onRowDblClick: function (e) {
-            console.log(e);
-            myModal.toggle();
-            $("#globalModalBody").load("@Url.Action("_ViewClass","Class")", { key: e.key });
-        }
     });
+
     function sendRequest(url, method = 'GET', data) {
         const d = $.Deferred();
 

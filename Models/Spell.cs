@@ -46,7 +46,6 @@ namespace CharacterManager.Models
         [AllowNull]
         [StringLength(4000)]
         public string Upcast { get; set; }
-        [AllowNull]
         [StringLength(100)]
         public string Source { get; set; }
 

@@ -20,7 +20,6 @@ namespace CharacterManager.Models
         [AllowNull]
         [StringLength(100)]
         public string Prerequisite { get; set; }
-        [AllowNull]
         [StringLength(100)]
         public string Source { get; set; }
 
@@ -51,7 +50,6 @@ namespace CharacterManager.Models
         [AllowHtml]
         public string Description { get; set; }
         public int Level { get; set; }
-        [AllowNull]
         [StringLength(100)]
         public string Source { get; set; }
 

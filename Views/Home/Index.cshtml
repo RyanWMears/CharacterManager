@@ -8,6 +8,7 @@
     <a id="newCharBtn" class="navbar-brand" asp-area="" asp-controller="Character" asp-action="Index">New Character</a>
     <a id="classBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Class">Class</a>
     <a id="featsBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Feats">Feats</a>
+    <a id="languagesBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Languages">Language</a>
     <a id="racessBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Races">Races</a>
     <a id="spellsBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Spells">Spells</a>
 </div>
@@ -29,6 +30,13 @@
         width: 320
     });
     $('#featsBtn').dxButton({
+        stylingMode: 'contained',
+        text: 'Contained',
+        type: 'success',
+        height: 120,
+        width: 320
+    });
+    $('#languagesBtn').dxButton({
         stylingMode: 'contained',
         text: 'Contained',
         type: 'success',

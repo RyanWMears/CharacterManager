@@ -26,6 +26,10 @@ namespace CharacterManager.Controllers
         {
             return View("Feats");
         }
+        public IActionResult Languages()
+        {
+            return View("Languages");
+        }
         public IActionResult Races()
         {
             return View("Races");
