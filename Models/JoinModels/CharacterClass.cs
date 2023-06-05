@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CharacterManager.Models
+namespace CharacterManager.Models.JoinModels
 {
     [Table("CharacterClass")]
     public class CharacterClass
@@ -13,10 +13,11 @@ namespace CharacterManager.Models
         [ForeignKey("Class")]
         public Guid ClassId { get; set; }
         public CharacterClass() { }
-        public CharacterClass(Guid characterId, Guid classId) {
-            CharacterClassId    = new Guid();
-            CharacterId         = characterId;
-            ClassId             = classId;
+        public CharacterClass(Guid characterId, Guid classId)
+        {
+            CharacterClassId = new Guid();
+            CharacterId = characterId;
+            ClassId = classId;
         }
     }
 }

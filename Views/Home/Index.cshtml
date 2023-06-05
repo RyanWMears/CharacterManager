@@ -5,12 +5,18 @@
 
 <div class="text-center">
     <h1 class="display-4">Character Manager</h1>
-    <a id="newCharBtn" class="navbar-brand" asp-area="" asp-controller="Character" asp-action="Index">New Character</a>
-    <a id="classBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Class">Class</a>
-    <a id="featsBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Feats">Feats</a>
-    <a id="languagesBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Languages">Language</a>
-    <a id="racessBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Races">Races</a>
-    <a id="spellsBtn" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Spells">Spells</a>
+    <div class="align-content-center">
+        <a id="newCharBtn"      class="navbar-brand mt-3" asp-area="" asp-controller="Character" asp-action="Index">New Character</a>
+        <a id="classBtn"        class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="Class">Class</a>
+        <a id="featsBtn"        class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="Feats">Feats</a>
+        <a id="itemsBtn"        class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="Items">Items</a>
+        <a id="languagesBtn"    class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="Languages">Language</a>
+        <a id="racessBtn"       class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="Races">Races</a>
+        <a id="savingThrowsBtn" class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="SavingThrows">Saving Throws</a>
+        <a id="skillsBtn"       class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="Skills">Skills</a>
+        <a id="spellsBtn"       class="navbar-brand mt-3" asp-area="" asp-controller="Home" asp-action="Spells">Spells</a>
+    </div>
+    
 </div>
 
 
@@ -36,6 +42,13 @@
         height: 120,
         width: 320
     });
+    $('#itemsBtn').dxButton({
+        stylingMode: 'contained',
+        text: 'Contained',
+        type: 'success',
+        height: 120,
+        width: 320
+    });
     $('#languagesBtn').dxButton({
         stylingMode: 'contained',
         text: 'Contained',
@@ -44,6 +57,20 @@
         width: 320
     });
     $('#racessBtn').dxButton({
+        stylingMode: 'contained',
+        text: 'Contained',
+        type: 'success',
+        height: 120,
+        width: 320
+    });
+    $('#savingThrowsBtn').dxButton({
+        stylingMode: 'contained',
+        text: 'Contained',
+        type: 'success',
+        height: 120,
+        width: 320
+    });
+    $('#skillsBtn').dxButton({
         stylingMode: 'contained',
         text: 'Contained',
         type: 'success',

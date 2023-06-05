@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CharacterManager.Models
 {
@@ -16,13 +17,32 @@ namespace CharacterManager.Models
         public string Name { get; set; }
         public int Level { get; set; }
         [NotMapped]
-        public Proficiency Proficiency { get; set; }
+        [AllowNull]
+        public List<Skill> SkillProficiencies{ get; set; }
         [NotMapped]
-        public List<Item>? Items { get; set; }
+        [AllowNull]
+        public List<Item> Items { get; set; }
         [NotMapped]
-        public List<Spell>? SpellsKnown { get; set; }
+        [AllowNull]
+        public List<Spell> SpellsKnown { get; set; }
         [NotMapped]
-        public List<Spell>? SpellsPrepared { get; set; } 
+        [AllowNull]
+        public List<Spell> SpellsPrepared { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public List<Item> Armor { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public List<Item> Weapons { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public List<Item> Tools { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public List<SavingThrow> SavingThrows { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public List<Skill> Skills { get; set; }
         public int ProficiencyBonus
         {
             get
@@ -31,7 +51,11 @@ namespace CharacterManager.Models
             }
         }
 
-        public Character() { }
+        public Character() {
+            CharacterId = Guid.NewGuid();
+            Name = "";
+            Level = 1;
+        }
         public Character(string name, int level)
         {
             CharacterId = Guid.NewGuid();

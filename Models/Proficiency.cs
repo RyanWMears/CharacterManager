@@ -11,15 +11,15 @@ namespace CharacterManager.Models
 
         [ForeignKey("Character")]
         public Guid CharacterId { get; set; }
-        public Skills Skills { get; set; }
-        public SavingThrows SavingThrows { get; set; }
+        public Skill Skills { get; set; }
+        public SavingThrow SavingThrows { get; set; }
 
         public Proficiency() {
             ProficiencyId = Guid.Empty;
-            SavingThrows = new SavingThrows();
-            Skills = new Skills();
+            SavingThrows = new SavingThrow();
+            Skills = new Skill();
         }
-        public Proficiency(SavingThrows savingThrows, Skills skills)
+        public Proficiency(SavingThrow savingThrows, Skill skills)
         {
             ProficiencyId = Guid.Empty;
             SavingThrows = savingThrows;

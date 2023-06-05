@@ -1,6 +1,5 @@
 ﻿using CharacterManager.DAL;
 using CharacterManager.Models;
-using CharacterManager.Models.JoinModels.RaceJoins;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Framework;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +8,12 @@ using System.Diagnostics;
 
 namespace CharacterManager.Controllers
 {
-    public class LanguageController : Controller
+    public class SavingThrowController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         protected ApplicationDBContext _context = new ApplicationDBContext();
 
-        public LanguageController(ILogger<HomeController> logger)
+        public SavingThrowController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
@@ -25,29 +24,29 @@ namespace CharacterManager.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetLanguages()
+        public JsonResult GetSavingThrows()
         {
-            List<Language> output = _context.Languages.OrderBy(x => x.Name).ToList();
+            List<SavingThrow> output = _context.SavingThrows.OrderBy(x => x.Name).ToList();
 
             return Json(output);
         }
 
         [HttpPost]
-        public void AddLanguage(string values)
+        public void AddSavingThrow(string values)
         {
             if (ModelState.IsValid) {
-                Language model = new Language();
+                SavingThrow model = new SavingThrow();
                 JsonConvert.PopulateObject(values, model);
-                _context.Languages.Add(model);
+                _context.SavingThrows.Add(model);
 
                 _context.SaveChanges();
             }
         }
 
         [HttpPost]
-        public void EditLanguage(Guid key, string values)
+        public void EditSavingThrow(Guid key, string values)
         {
-            var model = _context.Languages.Where(x => x.LanguageId == key).FirstOrDefault();
+            var model = _context.SavingThrows.Where(x => x.SavingThrowId == key).FirstOrDefault();
             if (model != null)
             {
                 JsonConvert.PopulateObject(values, model);
@@ -57,12 +56,12 @@ namespace CharacterManager.Controllers
         }
 
         [HttpPost]
-        public void DeleteLanguage(Guid key)
+        public void DeleteSavingThrow(Guid key)
         {
-            var model = _context.Languages.Where(x => x.LanguageId == key).FirstOrDefault();
+            var model = _context.SavingThrows.Where(x => x.SavingThrowId == key).FirstOrDefault();
             if (model != null)
             {
-                _context.Languages.Remove(model);
+                _context.SavingThrows.Remove(model);
                 _context.SaveChanges();
             }
         }

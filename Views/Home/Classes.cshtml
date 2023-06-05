@@ -36,25 +36,60 @@
         },
     });
  
+    var itemStore = new DevExpress.data.CustomStore({
+        key: 'itemId',
+        loadMode: 'raw',
+        load() {
+            return sendRequest("@Url.Content("~/Item/GetItems")");
+        },
+    });
     $('#classGridContainer').dxDataGrid({
         dataSource: store,
         remoteOperations: false,
         columns: [
-            {
-                type: 'buttons',
-                width: 110,
-                buttons: [{
-                    hint: 'edit',
-                    icon: 'edit',
-                    visible(e) {
-                        return !e.row.isEditing;
-                    },
-                    onClick(e) {
-                        myModal.toggle();
-                        $("#globalModalBody").load("@Url.Action("_ViewClass","Class")", { key: e.row.key });
-                    },
-                }],
-            },
+            //{
+            //    type: 'buttons',
+            //    width: 110,
+            //    buttons: [{
+            //        hint: 'new',
+            //        icon: 'plus',
+            //        visible(e) {
+            //            return !e.row.isEditing;
+            //        },
+            //        onClick(e, a, b) {
+            //            console.log(e);
+            //            console.log(a);
+            //            console.log(b);
+            //            myModal.toggle();
+            //            $("#globalModalBody").load("@Url.Action("_ViewClass","Class")", { key: e.row.key });
+            //        },
+            //    },
+            //    {
+            //        hint: 'edit',
+            //        icon: 'edit',
+            //        visible(e) {
+            //            return !e.row.isEditing;
+            //        },
+            //        onClick(e, a, b) {
+            //            console.log(e);
+            //            console.log(a);
+            //            console.log(b);
+            //            myModal.toggle();
+            //            $("#globalModalBody").load("@Url.Action("_EditClass","Class")", { key: e.row.key });
+            //        },
+            //    },
+            //    {
+            //        hint: 'delete',
+            //        icon: 'remove',
+            //        visible(e) {
+            //            return !e.row.isEditing;
+            //        },
+            //        onClick(e) {
+            //            myModal.toggle();
+            //            sendRequest("@Url.Content("~/Class/DeleteClass")", 'POST', { key: e.row.key });
+            //        },
+            //    }],
+            //},
             {
                 dataField: 'name',
                 dataType: 'string',
@@ -73,7 +108,136 @@
                         height: 100,
                     },
                 }
-            }
+            },
+            {
+                dataField: 'itemIds',
+                caption: 'Armor',
+                dataType: 'string',
+                visible: false,
+                formItem: {
+                    colSpan: 2,
+                    editorType: 'dxTagBox',
+                    editorOptions: {
+                        dataSource: new DevExpress.data.CustomStore({
+                            key: 'itemId',
+                            loadMode: 'raw',
+                            load() {
+                                return sendRequest("@Url.Content("~/Item/GetArmor")");
+                            },
+                        }),
+                        valueExpr: 'itemId',
+                        displayExpr: 'name',
+                        searchEnabled: true,
+                        showSelectionControls: true,
+                        showDropDownButton: true,
+                        applyValueMode: 'useButtons',
+                    },
+                },
+            },
+            {
+                dataField: 'itemIds',
+                caption: 'Weapons',
+                dataType: 'string',
+                visible: false,
+                formItem: {
+                    colSpan: 2,
+                    editorType: 'dxTagBox',
+                    editorOptions: {
+                        dataSource: new DevExpress.data.CustomStore({
+                            key: 'itemId',
+                            loadMode: 'raw',
+                            load() {
+                                return sendRequest("@Url.Content("~/Item/GetWeapons")");
+                            },
+                        }),
+                        valueExpr: 'itemId',
+                        displayExpr: 'name',
+                        searchEnabled: true,
+                        showSelectionControls: true,
+                        showDropDownButton: true,
+                        applyValueMode: 'useButtons',
+                    },
+                },
+            },
+            {
+                dataField: 'itemId',
+                caption: 'Tools',
+                dataType: 'string',
+                visible: false,
+                formItem: {
+                    colSpan: 2,
+                    editorType: 'dxTagBox',
+                    editorOptions: {
+                        dataSource: new DevExpress.data.CustomStore({
+                            key: 'itemId',
+                            loadMode: 'raw',
+                            load() {
+                                return sendRequest("@Url.Content("~/Item/GetTools")");
+                            },
+                        }),
+                        valueExpr: 'itemId',
+                        displayExpr: 'name',
+                        searchEnabled: true,
+                        showSelectionControls: true,
+                        showDropDownButton: true,
+                        applyValueMode: 'useButtons',
+                    },
+                },
+            },
+            {
+                dataField: 'savingThrowIds',
+                caption: 'Saving Throws',
+                dataType: 'string',
+                visible: false,
+                formItem: {
+                    colSpan: 2,
+                    editorType: 'dxTagBox',
+                    editorOptions: {
+                        dataSource: new DevExpress.data.CustomStore({
+                            key: 'savingThrowId',
+                            loadMode: 'raw',
+                            load() {
+                                return sendRequest("@Url.Content("~/SavingThrow/GetSavingThrows")");
+                            },
+                        }),
+                        valueExpr: 'savingThrowId',
+                        displayExpr: 'name',
+                        searchEnabled: true,
+                        showSelectionControls: true,
+                        showDropDownButton: true,
+                        applyValueMode: 'useButtons',
+                    },
+                },
+            },
+            {
+                dataField: 'skillIds',
+                caption: 'Skills',
+                dataType: 'string',
+                visible: false,
+                formItem: {
+                    colSpan: 2,
+                    editorType: 'dxTagBox',
+                    editorOptions: {
+                        dataSource: new DevExpress.data.CustomStore({
+                            key: 'skillId',
+                            loadMode: 'raw',
+                            load() {
+                                return sendRequest("@Url.Content("~/Skill/GetSkills")");
+                            },
+                        }),
+                        valueExpr: 'skillId',
+                        displayExpr: 'name',
+                        searchEnabled: true,
+                        showSelectionControls: true,
+                        showDropDownButton: true,
+                        applyValueMode: 'useButtons',
+                    },
+                },
+            },
+            {
+                dataField: 'source',
+                dataType: 'string',
+            },
         ],
         paging: {
             pageSize: 10,
@@ -112,6 +276,9 @@
             console.log(e);
             myModal.toggle();
             $("#globalModalBody").load("@Url.Action("_ViewClass","Class")", { key: e.key });
+        },
+        onRowUpdating: function (e){
+            console.log(e);
         }
     });
     function sendRequest(url, method = 'GET', data) {

@@ -26,6 +26,10 @@ namespace CharacterManager.Controllers
         {
             return View("Feats");
         }
+        public IActionResult Items()
+        {
+            return View("Items");
+        }
         public IActionResult Languages()
         {
             return View("Languages");
@@ -33,6 +37,14 @@ namespace CharacterManager.Controllers
         public IActionResult Races()
         {
             return View("Races");
+        }
+        public IActionResult SavingThrows()
+        {
+            return View("SavingThrows");
+        }
+        public IActionResult Skills()
+        {
+            return View("Skills");
         }
         public IActionResult Spells()
         {

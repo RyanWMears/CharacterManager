@@ -13,6 +13,9 @@ namespace CharacterManager.Models
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+        [AllowNull]
+        [StringLength(4000)]
+        public string Description { get; set; }
         public double Weight { get; set; } = 0.0;
         public int Value { get; set; } = 0;
         [AllowNull]

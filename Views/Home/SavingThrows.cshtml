@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Saving Throws";
+}
+
+<div style="min-height: 90vh!important;" class="text-center row h-100">
+    <h1 class="display-4">Saving Throws</h1>
+    <div id="savingThrowsGridContainer"></div>
+</div>
+
+<script>
+    var store = new DevExpress.data.CustomStore({
+        key: 'savingThrowId',
+        load() {
+            return sendRequest("@Url.Content("~/SavingThrow/GetSavingThrows")");
+        },
+        insert(values) {
+            return sendRequest("@Url.Content("~/SavingThrow/AddSavingThrow")", 'POST', {
+                values: JSON.stringify(values),
+            });
+        },
+        update(key, values) {
+            return sendRequest("@Url.Content("~/SavingThrow/EditSavingThrow")", 'POST', {
+                key,
+                values: JSON.stringify(values),
+            });
+        },
+        remove(key) {
+            return sendRequest("@Url.Content("~/SavingThrow/DeleteSavingThrow")", 'POST', {
+                key,
+            });
+        },
+    });
+
+    $('#savingThrowsGridContainer').dxDataGrid({
+        dataSource: store,
+        remoteOperations: false,
+        columns: [
+            {
+                dataField: 'name',
+                dataType: 'string',
+            }
+        ],
+        paging: {
+            pageSize: 10,
+        },
+        pager: {
+            visible: true,
+            allowedPageSizes: [5, 10, 25, 50, 100],
+            showPageSizeSelector: true,
+            showInfo: true,
+            showNavigationButtons: true,
+        },
+        filterRow: {
+            visible: true,
+        },
+        headerFilter: {
+            visible: true,
+        },
+        groupPanel: {
+            visible: true,
+        },
+        scrolling: {
+            mode: 'virtual',
+        },
+        height: 600,
+        showBorders: true,
+        grouping: {
+            autoExpandAll: false,
+        },
+        editing: {
+            allowAdding: true,
+            allowUpdating: true,
+            allowDeleting: true,
+        },
+    });
+
+    function sendRequest(url, method = 'GET', data) {
+        const d = $.Deferred();
+
+        //logRequest(method, url, data);
+
+        $.ajax(url, {
+            method,
+            data,
+            cache: false,
+            xhrFields: { withCredentials: true },
+        }).done((result) => {
+            d.resolve(method === 'GET' ? result : result);
+        }).fail((xhr) => {
+            d.reject(xhr.responseJSON ? xhr.responseJSON.Message : xhr.statusText);
+        });
+
+        return d.promise();
+    }
+
+    function logRequest(method, url, data) {
+        const args = Object.keys(data || {}).map((key) => `${key}=${data[key]}`).join(' ');
+
+        const logList = $('#requests ul');
+        const time = DevExpress.localization.formatDate(new Date(), 'HH:mm:ss');
+        const newItem = $('<li>').text([time, method, url.slice(URL.length), args].join(' '));
+
+        logList.prepend(newItem);
+    }
+</script>

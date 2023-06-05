@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CharacterManager.Models.JoinModels.RaceJoins;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
@@ -35,6 +36,11 @@ namespace CharacterManager.Models
         [AllowNull]
         [StringLength(100)]
         public string Source { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public List<Guid> LanguageIds { get; set; }
+        [AllowNull]
+        public IList<RaceLanguage> RaceLanguages { get; set; }
 
         public Race() { }
         public Race(string name, string ability, string size, string speed, string language, string description, string type, string source)

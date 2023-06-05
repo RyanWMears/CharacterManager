@@ -4,6 +4,7 @@ using CharacterManager.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterManager.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230603184608_16")]
+    partial class _16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,6 +97,23 @@ namespace CharacterManager.Migrations
                     b.ToTable("Character");
                 });
 
+            modelBuilder.Entity("CharacterManager.Models.CharacterClass", b =>
+                {
+                    b.Property<Guid>("CharacterClassId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CharacterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CharacterClassId");
+
+                    b.ToTable("CharacterClass");
+                });
+
             modelBuilder.Entity("CharacterManager.Models.Class", b =>
                 {
                     b.Property<Guid>("ClassId")
@@ -156,6 +176,23 @@ namespace CharacterManager.Migrations
                     b.HasKey("ClassFeatId");
 
                     b.ToTable("ClassFeats");
+                });
+
+            modelBuilder.Entity("CharacterManager.Models.ClassLanguage", b =>
+                {
+                    b.Property<Guid>("ClassLanguageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClassId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ClassLanguageId");
+
+                    b.ToTable("ClassLanguage");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.ErrorViewModel", b =>
@@ -224,11 +261,6 @@ namespace CharacterManager.Migrations
                     b.Property<bool>("Attunement")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
                     b.Property<bool>("Magic")
                         .HasColumnType("bit");
 
@@ -263,66 +295,6 @@ namespace CharacterManager.Migrations
                     b.ToTable("Items");
 
                     b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.CharacterClass", b =>
-                {
-                    b.Property<Guid>("CharacterClassId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CharacterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClassId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("CharacterClassId");
-
-                    b.ToTable("CharacterClass");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.ClassJoins.ClassSavingThrow", b =>
-                {
-                    b.Property<Guid>("ClassId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SavingThrowId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ClassId", "SavingThrowId");
-
-                    b.HasIndex("SavingThrowId");
-
-                    b.ToTable("ClassSavingThrows");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.ClassJoins.ClassSkill", b =>
-                {
-                    b.Property<Guid>("ClassId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SkillId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ClassId", "SkillId");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("ClassSkills");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.RaceLanguage", b =>
-                {
-                    b.Property<Guid>("RaceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LanguageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("RaceId", "LanguageId");
-
-                    b.ToTable("RaceLanguages");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.Language", b =>
@@ -370,7 +342,7 @@ namespace CharacterManager.Migrations
                     b.Property<Guid>("CharacterId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SavingThrowsSavingThrowId")
+                    b.Property<Guid>("SavingThrowsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SkillsSkillId")
@@ -378,7 +350,7 @@ namespace CharacterManager.Migrations
 
                     b.HasKey("ProficiencyId");
 
-                    b.HasIndex("SavingThrowsSavingThrowId");
+                    b.HasIndex("SavingThrowsId");
 
                     b.HasIndex("SkillsSkillId");
 
@@ -438,7 +410,7 @@ namespace CharacterManager.Migrations
 
             modelBuilder.Entity("CharacterManager.Models.SavingThrow", b =>
                 {
-                    b.Property<Guid>("SavingThrowId")
+                    b.Property<Guid>("SavingThrowsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -447,7 +419,7 @@ namespace CharacterManager.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("SavingThrowId");
+                    b.HasKey("SavingThrowsId");
 
                     b.ToTable("SavingThrows");
                 });
@@ -579,68 +551,11 @@ namespace CharacterManager.Migrations
                     b.ToTable("Weapons");
                 });
 
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.ClassJoins.ClassSavingThrow", b =>
-                {
-                    b.HasOne("CharacterManager.Models.Class", "Class")
-                        .WithMany("ClassSavingThrows")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.SavingThrow", "SavingThrow")
-                        .WithMany("ClassSavingThrows")
-                        .HasForeignKey("SavingThrowId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-
-                    b.Navigation("SavingThrow");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.ClassJoins.ClassSkill", b =>
-                {
-                    b.HasOne("CharacterManager.Models.Class", "Class")
-                        .WithMany("ClassSkills")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.Skill", "Skill")
-                        .WithMany("ClassSkills")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-
-                    b.Navigation("Skill");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.RaceLanguage", b =>
-                {
-                    b.HasOne("CharacterManager.Models.Language", "Language")
-                        .WithMany("RaceLanguages")
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.Race", "Race")
-                        .WithMany("RaceLanguages")
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Language");
-
-                    b.Navigation("Race");
-                });
-
             modelBuilder.Entity("CharacterManager.Models.Proficiency", b =>
                 {
                     b.HasOne("CharacterManager.Models.SavingThrow", "SavingThrows")
                         .WithMany()
-                        .HasForeignKey("SavingThrowsSavingThrowId")
+                        .HasForeignKey("SavingThrowsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -671,33 +586,6 @@ namespace CharacterManager.Migrations
                         .HasForeignKey("CharacterManager.Models.Weapon", "ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Class", b =>
-                {
-                    b.Navigation("ClassSavingThrows");
-
-                    b.Navigation("ClassSkills");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Language", b =>
-                {
-                    b.Navigation("RaceLanguages");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Race", b =>
-                {
-                    b.Navigation("RaceLanguages");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.SavingThrow", b =>
-                {
-                    b.Navigation("ClassSavingThrows");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Skill", b =>
-                {
-                    b.Navigation("ClassSkills");
                 });
 #pragma warning restore 612, 618
         }

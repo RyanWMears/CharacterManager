@@ -4,6 +4,7 @@ using CharacterManager.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterManager.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230605000619_24")]
+    partial class _24
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,11 +227,6 @@ namespace CharacterManager.Migrations
                     b.Property<bool>("Attunement")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar(4000)");
-
                     b.Property<bool>("Magic")
                         .HasColumnType("bit");
 
@@ -370,7 +368,7 @@ namespace CharacterManager.Migrations
                     b.Property<Guid>("CharacterId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SavingThrowsSavingThrowId")
+                    b.Property<Guid>("SavingThrowsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SkillsSkillId")
@@ -378,7 +376,7 @@ namespace CharacterManager.Migrations
 
                     b.HasKey("ProficiencyId");
 
-                    b.HasIndex("SavingThrowsSavingThrowId");
+                    b.HasIndex("SavingThrowsId");
 
                     b.HasIndex("SkillsSkillId");
 
@@ -438,7 +436,7 @@ namespace CharacterManager.Migrations
 
             modelBuilder.Entity("CharacterManager.Models.SavingThrow", b =>
                 {
-                    b.Property<Guid>("SavingThrowId")
+                    b.Property<Guid>("SavingThrowsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -447,7 +445,7 @@ namespace CharacterManager.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("SavingThrowId");
+                    b.HasKey("SavingThrowsId");
 
                     b.ToTable("SavingThrows");
                 });
@@ -640,7 +638,7 @@ namespace CharacterManager.Migrations
                 {
                     b.HasOne("CharacterManager.Models.SavingThrow", "SavingThrows")
                         .WithMany()
-                        .HasForeignKey("SavingThrowsSavingThrowId")
+                        .HasForeignKey("SavingThrowsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

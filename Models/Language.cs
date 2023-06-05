@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CharacterManager.Models.JoinModels.ClassJoins;
+using CharacterManager.Models.JoinModels.RaceJoins;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
@@ -24,6 +26,11 @@ namespace CharacterManager.Models
 
         [StringLength(100)]
         public string Source { get; set; } = "None";
+        [NotMapped]
+        [AllowNull]
+        public List<Guid> RaceIds { get; set; }
+        [AllowNull]
+        public IList<RaceLanguage> RaceLanguages { get; set; }
         public Language()
         {
             LanguageId = new Guid();
