@@ -10,49 +10,53 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid ClassId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
-        [Required]
-        public int HitDie { get; set; } = 1;
-        [Required]
-        [StringLength(4000)]
+        public int HitDie { get; set; }
         public string Description { get; set; }
-        [Required]
-        public int ClassLevel { get; set; } = 0;
-        [StringLength(100)]
+        public int ClassLevel { get; set; }
         public string Source { get; set; }
+
+
+
+        //[NotMapped]
+        //public virtual List<Guid> ArmorIds { get; set; }
+        //[NotMapped]
+        //public virtual List<Guid> WeaponsIds { get; set; }
+        //[NotMapped]
+        //public virtual List<Guid> ToolsIds { get; set; }
+
+
+
+        [AllowNull]
         [NotMapped]
+        public virtual IList<Guid> SavingThrowIds { get; set; }
         [AllowNull]
-        public List<Guid> ArmorIds { get; set; }
         [NotMapped]
+        public virtual IList<Guid> SkillIds { get; set; }
         [AllowNull]
-        public List<Guid> WeaponsIds { get; set; }
         [NotMapped]
+        public virtual IList<ClassFeat> ClassFeats { get; set; }
         [AllowNull]
-        public List<Guid> ToolsIds { get; set; }
         [NotMapped]
+        public virtual IList<ClassSavingThrow> ClassSavingThrows { get; set; }
         [AllowNull]
-        public List<Guid> SavingThrowIds { get; set; }
         [NotMapped]
+        public virtual IList<ClassSkill> ClassSkills { get; set; }
         [AllowNull]
-        public List<Guid> SkillIds { get; set; }
-        [AllowNull]
-        public IList<ClassSkill> ClassSkills { get; set; }
-        [AllowNull]
-        public IList<ClassSavingThrow> ClassSavingThrows { get; set; }
+        [NotMapped]
+        public virtual IList<SubClass> SubClasses { get; set; }
 
         public Class()
         {
             ClassId = Guid.NewGuid();
-            Name = "";
+            Name = string.Empty;
             HitDie = 1;
-            Description = "";
+            Description = string.Empty;
             ClassLevel = 0;
-            Source = "";
-            ArmorIds = new List<Guid>();
-            WeaponsIds = new List<Guid>();
-            ToolsIds = new List<Guid>();
+            Source = string.Empty;
+            //ArmorIds = new List<Guid>();
+            //WeaponsIds = new List<Guid>();
+            //ToolsIds = new List<Guid>();
             SavingThrowIds = new List<Guid>();
             SkillIds = new List<Guid>();
         }
@@ -75,9 +79,9 @@ namespace CharacterManager.Models
             Description = description;
             ClassLevel = classLevel;
             Source = source;
-            ArmorIds = armor;
-            WeaponsIds = weapons;
-            ToolsIds = tools;
+            //ArmorIds = armor;
+            //WeaponsIds = weapons;
+            //ToolsIds = tools;
             SavingThrowIds = savingThrows;
             SkillIds = skillIds;
         }
@@ -88,23 +92,24 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid SubClassId { get; set; }
-        [Required]
+        public string Name { get; set; }
+        public string Source { get; set; }
+
         [ForeignKey("Class")]
         public Guid ClassId { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
-        [StringLength(100)]
-        public string Source { get; set; }
+        [AllowNull]
+        public virtual Class Class { get; set; }
 
         public SubClass()
         {
-            Name = "";
+            Name = string.Empty;
+            Source = string.Empty;
         }
-        public SubClass(string name)
+        public SubClass(string name, string source)
         {
             ClassId = new Guid();
             Name = name;
+            Source = source;
         }
     }
 }

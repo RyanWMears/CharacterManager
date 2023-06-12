@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CharacterManager.Models
 {
@@ -9,11 +10,14 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid GameId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
+        [AllowNull]
+        [NotMapped]
+        public virtual IList<Character> Characters { get; set; }
 
-        public Game() { }
+        public Game() {
+            Name = string.Empty;
+        }
 
         public Game(string name)
         {

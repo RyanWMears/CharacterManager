@@ -40,10 +40,6 @@
                 dataType: 'string',
             },
             {
-                dataField: 'ability',
-                dataType: 'string',
-            },
-            {
                 dataField: 'size',
                 dataType: 'string',
             },
@@ -52,12 +48,40 @@
                 dataType: 'string',
             },
             {
-                dataField: 'language',
+                dataField: 'languageIds',
+                caption: 'Languages',
                 dataType: 'string',
+                visible: false,
+                formItem: {
+                    colSpan: 1,
+                    editorType: 'dxTagBox',
+                    editorOptions: {
+                        dataSource: new DevExpress.data.CustomStore({
+                            key: 'languageId',
+                            loadMode: 'raw',
+                            load() {
+                                return sendRequest("@Url.Content("~/Language/GetLanguages")");
+                            },
+                        }),
+                        valueExpr: 'languageId',
+                        displayExpr: 'name',
+                        searchEnabled: true,
+                        showSelectionControls: true,
+                        showDropDownButton: true,
+                        applyValueMode: 'useButtons',
+                    },
+                },
             },
             {
                 dataField: 'description',
                 dataType: 'string',
+                formItem: {
+                    colSpan: 2,
+                    editorType: 'dxTextArea',
+                    editorOptions: {
+                        height: 100,
+                    },
+                },
             },
             {
                 dataField: 'type',
@@ -96,6 +120,7 @@
             autoExpandAll: false,
         },
         editing: {
+            mode: 'form',
             allowAdding: true,
             allowUpdating: true,
             allowDeleting: true,

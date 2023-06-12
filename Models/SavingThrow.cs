@@ -11,13 +11,10 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid SavingThrowId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
+
+        [AllowNull]
         [NotMapped]
-        [AllowNull]
-        public List<Guid> ClassIds { get; set; }
-        [AllowNull]
         public IList<ClassSavingThrow> ClassSavingThrows { get; set; }
 
         public SavingThrow() {
@@ -28,7 +25,7 @@ namespace CharacterManager.Models
         public SavingThrow(string name)
         {
             SavingThrowId = Guid.NewGuid();
-            Name = "";
+            Name = name;
         }
     }
 }

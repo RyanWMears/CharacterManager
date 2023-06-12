@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CharacterManager.Models.JoinModels.RaceJoins;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
@@ -10,20 +11,30 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid FeatId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
-        [Required]
-        [StringLength(4000)]
         [AllowHtml]
         public string Description { get; set; }
         [AllowNull]
-        [StringLength(100)]
         public string Prerequisite { get; set; }
-        [StringLength(100)]
         public string Source { get; set; }
 
-        public Feat() { }
+
+        //Joins
+        public Guid CharacterId { get; set; }
+        [AllowNull]
+        public virtual Character Character { get; set; }
+
+        [NotMapped]
+        [AllowNull]
+        public virtual IList<AbilityScoreFeat> AbilityScoreFeats { get; set; }
+
+        public Feat() { 
+            FeatId = Guid.NewGuid();
+            Name = string.Empty;
+            Description = string.Empty;
+            Prerequisite = string.Empty;
+            Source = string.Empty;
+        }
         public Feat(string name, string description, string type, string prerequisite, string source)
         {
             FeatId = new Guid();
@@ -39,27 +50,35 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid ClassFeatId { get; set; }
-        [Required]
-        [ForeignKey("Class")]
-        public Guid ClassId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
-        [Required]
-        [StringLength(4000)]
         [AllowHtml]
         public string Description { get; set; }
-        public int Level { get; set; }
-        [StringLength(100)]
+        public int LevelRequirement { get; set; }
         public string Source { get; set; }
 
-        public ClassFeat() { }
+        //Joins
+        public Guid ClassId { get; set; }
+        [AllowNull]
+        public virtual Class Class { get; set; }
+
+        [NotMapped]
+        [AllowNull]
+        public virtual IList<AbilityScoreClassFeat> AbilityScoreClassFeats { get; set; }
+
+
+        public ClassFeat() {
+            ClassFeatId = Guid.NewGuid();
+            Name = string.Empty;
+            Description = string.Empty;
+            LevelRequirement = 1;
+            Source = string.Empty;
+        }
         public ClassFeat(string name, string description, int level, string source)
         {
             ClassFeatId = new Guid();
             Name = name;
             Description = description;
-            Level = level;
+            LevelRequirement = level;
             Source = source;
         }
     }

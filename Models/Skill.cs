@@ -11,25 +11,20 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid SkillId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
+
+        [AllowNull]
         [NotMapped]
-        [AllowNull]
-        public List<Guid> ClassIds { get; set; }
-        [AllowNull]
         public IList<ClassSkill> ClassSkills { get; set; }
 
         public Skill() {
             SkillId = Guid.NewGuid();
             Name = "";
-            ClassIds = new List<Guid>();
         }
         public Skill(string name, List<Guid> classIds)
         {
             SkillId = Guid.NewGuid();
             Name = name;
-            ClassIds = classIds;
         }
 
         //public bool Acrobatics { get; set; } = false;

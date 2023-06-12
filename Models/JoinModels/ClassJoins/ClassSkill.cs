@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CharacterManager.Models.JoinModels.ClassJoins
 {
-    [Table("ClassSkills")]
+    [Table("ClassSkills", Schema = "join")]
     public class ClassSkill
     {
         [ForeignKey("Class")]

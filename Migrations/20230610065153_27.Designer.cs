@@ -4,6 +4,7 @@ using CharacterManager.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CharacterManager.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230610065153_27")]
+    partial class _27
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,26 +25,52 @@ namespace CharacterManager.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CharacterManager.Models.AbilityScore", b =>
+            modelBuilder.Entity("CharacterManager.Models.AbilityScores", b =>
                 {
-                    b.Property<Guid>("AbilityScoreId")
+                    b.Property<Guid>("AbilityScoresId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("newid()");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<Guid>("CharacterId")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasDefaultValue("");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
-                    b.Property<int>("Value")
+                    b.Property<int>("Charisma")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0);
 
-                    b.HasKey("AbilityScoreId");
+                    b.Property<int>("Constitution")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("Dexterity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("Intelligence")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("Strength")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<int>("Wisdom")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.HasKey("AbilityScoresId");
+
+                    b.HasIndex("CharacterId")
+                        .IsUnique();
 
                     b.ToTable("AbilityScores", (string)null);
                 });
@@ -52,9 +81,6 @@ namespace CharacterManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("newid()");
-
-                    b.Property<Guid?>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GameId")
                         .HasColumnType("uniqueidentifier");
@@ -72,8 +98,6 @@ namespace CharacterManager.Migrations
                         .HasDefaultValue("");
 
                     b.HasKey("CharacterId");
-
-                    b.HasIndex("AbilityScoreId");
 
                     b.HasIndex("GameId");
 
@@ -130,9 +154,6 @@ namespace CharacterManager.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("newid()");
 
-                    b.Property<Guid?>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ClassId")
                         .HasColumnType("uniqueidentifier");
 
@@ -164,8 +185,6 @@ namespace CharacterManager.Migrations
 
                     b.HasKey("ClassFeatId");
 
-                    b.HasIndex("AbilityScoreId");
-
                     b.HasIndex("ClassId");
 
                     b.ToTable("ClassFeats", (string)null);
@@ -187,12 +206,6 @@ namespace CharacterManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("newid()");
-
-                    b.Property<Guid?>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CharacterId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -224,10 +237,6 @@ namespace CharacterManager.Migrations
 
                     b.HasKey("FeatId");
 
-                    b.HasIndex("AbilityScoreId");
-
-                    b.HasIndex("CharacterId");
-
                     b.ToTable("Feats", (string)null);
                 });
 
@@ -256,9 +265,6 @@ namespace CharacterManager.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("newid()");
-
-                    b.Property<Guid?>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Attunement")
                         .ValueGeneratedOnAdd()
@@ -317,8 +323,6 @@ namespace CharacterManager.Migrations
 
                     b.HasKey("ItemId");
 
-                    b.HasIndex("AbilityScoreId");
-
                     b.ToTable("Items", (string)null);
 
                     b.UseTptMappingStrategy();
@@ -353,7 +357,7 @@ namespace CharacterManager.Migrations
 
                     b.HasIndex("SavingThrowId");
 
-                    b.ToTable("ClassSavingThrows", "join");
+                    b.ToTable("ClassSavingThrows");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.JoinModels.ClassJoins.ClassSkill", b =>
@@ -368,82 +372,7 @@ namespace CharacterManager.Migrations
 
                     b.HasIndex("SkillId");
 
-                    b.ToTable("ClassSkills", "join");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreCharacter", b =>
-                {
-                    b.Property<Guid>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CharacterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AbilityScoreId", "CharacterId");
-
-                    b.HasIndex("CharacterId");
-
-                    b.ToTable("AbilityScoreCharacters", "join");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreClassFeat", b =>
-                {
-                    b.Property<Guid>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClassFeatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AbilityScoreId", "ClassFeatId");
-
-                    b.HasIndex("ClassFeatId");
-
-                    b.ToTable("AbilityScoreClassFeats", "join");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreFeat", b =>
-                {
-                    b.Property<Guid>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FeatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AbilityScoreId", "FeatId");
-
-                    b.HasIndex("FeatId");
-
-                    b.ToTable("AbilityScoreFeats", "join");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreItem", b =>
-                {
-                    b.Property<Guid>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AbilityScoreId", "ItemId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("AbilityScoreItems", "join");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreRace", b =>
-                {
-                    b.Property<Guid>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RaceId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AbilityScoreId", "RaceId");
-
-                    b.HasIndex("RaceId");
-
-                    b.ToTable("AbilityScoreRaces", "join");
+                    b.ToTable("ClassSkills");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.RaceLanguage", b =>
@@ -458,7 +387,7 @@ namespace CharacterManager.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("RaceLanguages", "join");
+                    b.ToTable("RaceLanguages");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.Language", b =>
@@ -515,8 +444,12 @@ namespace CharacterManager.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("newid()");
 
-                    b.Property<Guid?>("AbilityScoreId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Ability")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -561,8 +494,6 @@ namespace CharacterManager.Migrations
                         .HasDefaultValue("");
 
                     b.HasKey("RaceId");
-
-                    b.HasIndex("AbilityScoreId");
 
                     b.ToTable("Races", (string)null);
                 });
@@ -749,10 +680,6 @@ namespace CharacterManager.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(10);
 
-                    b.Property<string>("ArmorType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.ToTable("Armor", (string)null);
                 });
 
@@ -792,12 +719,19 @@ namespace CharacterManager.Migrations
                     b.ToTable("Weapons", (string)null);
                 });
 
+            modelBuilder.Entity("CharacterManager.Models.AbilityScores", b =>
+                {
+                    b.HasOne("CharacterManager.Models.Character", "Character")
+                        .WithOne("AbilityScores")
+                        .HasForeignKey("CharacterManager.Models.AbilityScores", "CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+                });
+
             modelBuilder.Entity("CharacterManager.Models.Character", b =>
                 {
-                    b.HasOne("CharacterManager.Models.AbilityScore", null)
-                        .WithMany("Characters")
-                        .HasForeignKey("AbilityScoreId");
-
                     b.HasOne("CharacterManager.Models.Game", "Game")
                         .WithMany("Characters")
                         .HasForeignKey("GameId")
@@ -809,10 +743,6 @@ namespace CharacterManager.Migrations
 
             modelBuilder.Entity("CharacterManager.Models.ClassFeat", b =>
                 {
-                    b.HasOne("CharacterManager.Models.AbilityScore", null)
-                        .WithMany("ClassFeats")
-                        .HasForeignKey("AbilityScoreId");
-
                     b.HasOne("CharacterManager.Models.Class", "Class")
                         .WithMany("ClassFeats")
                         .HasForeignKey("ClassId")
@@ -822,40 +752,18 @@ namespace CharacterManager.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("CharacterManager.Models.Feat", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", null)
-                        .WithMany("Feats")
-                        .HasForeignKey("AbilityScoreId");
-
-                    b.HasOne("CharacterManager.Models.Character", "Character")
-                        .WithMany()
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Character");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Item", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", null)
-                        .WithMany("Items")
-                        .HasForeignKey("AbilityScoreId");
-                });
-
             modelBuilder.Entity("CharacterManager.Models.JoinModels.ClassJoins.ClassSavingThrow", b =>
                 {
                     b.HasOne("CharacterManager.Models.Class", "Class")
                         .WithMany("ClassSavingThrows")
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CharacterManager.Models.SavingThrow", "SavingThrow")
                         .WithMany("ClassSavingThrows")
                         .HasForeignKey("SavingThrowId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Class");
@@ -868,13 +776,13 @@ namespace CharacterManager.Migrations
                     b.HasOne("CharacterManager.Models.Class", "Class")
                         .WithMany("ClassSkills")
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CharacterManager.Models.Skill", "Skill")
                         .WithMany("ClassSkills")
                         .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Class");
@@ -882,125 +790,23 @@ namespace CharacterManager.Migrations
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreCharacter", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", "AbilityScore")
-                        .WithMany("ASC")
-                        .HasForeignKey("AbilityScoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.Character", "Character")
-                        .WithMany("ASC")
-                        .HasForeignKey("CharacterId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AbilityScore");
-
-                    b.Navigation("Character");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreClassFeat", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", "AbilityScore")
-                        .WithMany("AbilityScoreClassFeats")
-                        .HasForeignKey("AbilityScoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.ClassFeat", "ClassFeat")
-                        .WithMany("AbilityScoreClassFeats")
-                        .HasForeignKey("ClassFeatId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AbilityScore");
-
-                    b.Navigation("ClassFeat");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreFeat", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", "AbilityScore")
-                        .WithMany("AbilityScoreFeats")
-                        .HasForeignKey("AbilityScoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.Feat", "Feat")
-                        .WithMany("AbilityScoreFeats")
-                        .HasForeignKey("FeatId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AbilityScore");
-
-                    b.Navigation("Feat");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreItem", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", "AbilityScore")
-                        .WithMany("AbilityScoreItems")
-                        .HasForeignKey("AbilityScoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.Item", "Item")
-                        .WithMany("AbilityScoreItems")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AbilityScore");
-
-                    b.Navigation("Item");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.AbilityScoreRace", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", "AbilityScore")
-                        .WithMany("AbilityScoreRaces")
-                        .HasForeignKey("AbilityScoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CharacterManager.Models.Race", "Race")
-                        .WithMany("AbilityScoreRaces")
-                        .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AbilityScore");
-
-                    b.Navigation("Race");
-                });
-
             modelBuilder.Entity("CharacterManager.Models.JoinModels.RaceJoins.RaceLanguage", b =>
                 {
                     b.HasOne("CharacterManager.Models.Language", "Language")
                         .WithMany("RaceLanguages")
                         .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CharacterManager.Models.Race", "Race")
                         .WithMany("RaceLanguages")
                         .HasForeignKey("RaceId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Language");
 
                     b.Navigation("Race");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Race", b =>
-                {
-                    b.HasOne("CharacterManager.Models.AbilityScore", null)
-                        .WithMany("Races")
-                        .HasForeignKey("AbilityScoreId");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.SubClass", b =>
@@ -1032,32 +838,10 @@ namespace CharacterManager.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CharacterManager.Models.AbilityScore", b =>
-                {
-                    b.Navigation("ASC");
-
-                    b.Navigation("AbilityScoreClassFeats");
-
-                    b.Navigation("AbilityScoreFeats");
-
-                    b.Navigation("AbilityScoreItems");
-
-                    b.Navigation("AbilityScoreRaces");
-
-                    b.Navigation("Characters");
-
-                    b.Navigation("ClassFeats");
-
-                    b.Navigation("Feats");
-
-                    b.Navigation("Items");
-
-                    b.Navigation("Races");
-                });
-
             modelBuilder.Entity("CharacterManager.Models.Character", b =>
                 {
-                    b.Navigation("ASC");
+                    b.Navigation("AbilityScores")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CharacterManager.Models.Class", b =>
@@ -1071,24 +855,9 @@ namespace CharacterManager.Migrations
                     b.Navigation("SubClasses");
                 });
 
-            modelBuilder.Entity("CharacterManager.Models.ClassFeat", b =>
-                {
-                    b.Navigation("AbilityScoreClassFeats");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Feat", b =>
-                {
-                    b.Navigation("AbilityScoreFeats");
-                });
-
             modelBuilder.Entity("CharacterManager.Models.Game", b =>
                 {
                     b.Navigation("Characters");
-                });
-
-            modelBuilder.Entity("CharacterManager.Models.Item", b =>
-                {
-                    b.Navigation("AbilityScoreItems");
                 });
 
             modelBuilder.Entity("CharacterManager.Models.Language", b =>
@@ -1098,8 +867,6 @@ namespace CharacterManager.Migrations
 
             modelBuilder.Entity("CharacterManager.Models.Race", b =>
                 {
-                    b.Navigation("AbilityScoreRaces");
-
                     b.Navigation("RaceLanguages");
                 });
 

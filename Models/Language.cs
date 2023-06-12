@@ -11,34 +11,26 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid LanguageId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
-        [StringLength(100)]
-        [AllowNull]
-        public string Type { get; set; } = "None";
-        [StringLength(100)]
-        [AllowNull]
-        public string Script { get; set; } = "None";
-        [StringLength(100)]
-        [AllowNull]
-        public string TypicalSpeakers { get; set; } = "None";
+        public string Type { get; set; }
+        public string Script { get; set; }
+        public string TypicalSpeakers { get; set; }
+        public string Source { get; set; }
 
-        [StringLength(100)]
-        public string Source { get; set; } = "None";
-        [NotMapped]
         [AllowNull]
+        [NotMapped]
         public List<Guid> RaceIds { get; set; }
         [AllowNull]
         public IList<RaceLanguage> RaceLanguages { get; set; }
+
         public Language()
         {
             LanguageId = new Guid();
-            Name = "None";
-            Type = "None";
-            Script = "None";
-            TypicalSpeakers = "None";
-            Source = "None";
+            Name = string.Empty;
+            Type = string.Empty;
+            Script = string.Empty;
+            TypicalSpeakers = string.Empty;
+            Source = string.Empty;
         }
         public Language(Guid classId, string name, string type, string script, string typicalSpeakers, string source)
         {

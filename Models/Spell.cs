@@ -10,30 +10,15 @@ namespace CharacterManager.Models
     {
         [Key]
         public Guid SpellId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
-        [Required]
         public int Level { get; set; }
-        [AllowNull]
-        [StringLength(4000)]
         [AllowHtml]
         public string Description { get; set; }
-        [AllowNull]
-        [StringLength(100)]
         public string School { get; set; }
-        public bool Concentration { get; set; } = false;
-        [AllowNull]
-        [StringLength(100)]
+        public bool Concentration { get; set; }
         public string CastingTime { get; set; }
-        [AllowNull]
-        [StringLength(100)]
         public string Range { get; set; }
-        [AllowNull]
-        [StringLength(100)]
         public string Duration { get; set; }
-        [AllowNull]
-        [StringLength(100)]
         public string Components { get; set; }
         [AllowNull]
         public int SaveDC { get; set; }

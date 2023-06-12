@@ -1,21 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CharacterManager.Models.JoinModels.ClassJoins;
+using CharacterManager.Models.JoinModels.RaceJoins;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace CharacterManager.Models
 {
-    [Table("Character")]
+    [Table("Characters")]
     public class Character
     {
         [Key]
         public Guid CharacterId { get; set; }
-
-        [ForeignKey("Game")]
-        public Guid GameId { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Name { get; set; }
         public int Level { get; set; }
+
         [NotMapped]
         [AllowNull]
         public List<Skill> SkillProficiencies{ get; set; }
@@ -43,6 +41,16 @@ namespace CharacterManager.Models
         [NotMapped]
         [AllowNull]
         public List<Skill> Skills { get; set; }
+
+        [ForeignKey("Game")]
+        public Guid GameId { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public virtual Game Game { get; set; }
+        [NotMapped]
+        [AllowNull]
+        public virtual IList<AbilityScoreCharacter> ASC { get; set; }
+
         public int ProficiencyBonus
         {
             get
@@ -53,7 +61,7 @@ namespace CharacterManager.Models
 
         public Character() {
             CharacterId = Guid.NewGuid();
-            Name = "";
+            Name = string.Empty;
             Level = 1;
         }
         public Character(string name, int level)
